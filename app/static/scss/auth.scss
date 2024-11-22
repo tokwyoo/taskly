@@ -1,0 +1,74 @@
+@import "base.scss";
+
+.custom-heading {
+  @extend .text-manrope-bold;
+  @extend .text-center;
+  @extend .mb-4;
+  @extend .h1;
+  color: $primary !important;
+}
+
+.custom-input {
+  @extend .form-floating;
+  @extend .mb-3;
+
+  input {
+    @extend .form-control;
+    @extend .rounded-pill;
+  }
+
+  label {
+    @extend .text-manrope-bold;
+    color: $secondary;
+  }
+}
+
+.custom-terms-container {
+  @extend .form-check;
+  @extend .mb-4;
+
+  .form-check-input {
+    @extend .form-check-input;
+  }
+
+  .form-check-label {
+    @extend .text-manrope-bold;
+    color: $secondary;
+    font-size: 0.875rem;
+  }
+}
+
+.custom-button {
+  @extend .text-manrope-bold;
+  @extend .btn;
+  @extend .btn-primary;
+  @extend .rounded-pill;
+  @extend .w-100;
+  height: 58px !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-signin-container {
+  @extend .text-center;
+  @extend .mt-3;
+
+  span {
+    @extend .text-secondary;
+    @extend .small;
+    @extend .text-manrope-bold;
+  }
+
+  a {
+    @extend .text-primary;
+    @extend .small;
+    @extend .text-manrope-bold;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@import "../bootstrap-5.3.3/scss/bootstrap";
