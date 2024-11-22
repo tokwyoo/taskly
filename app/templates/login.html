@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taskly - Login</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/auth.css') }}"
+    />
+  </head>
+
+  <body class="bg-light">
+    <div
+      class="container d-flex justify-content-center align-items-center min-vh-100"
+      id="login-container"
+    >
+      <div class="w-100" style="max-width: 400px" id="form-wrapper">
+        <h2 class="custom-heading" id="login-heading">Sign In</h2>
+
+        <form id="login-form">
+          <!-- Correo electrónico -->
+          <div class="custom-input" id="login-email-input">
+            <input type="email" id="login-email" placeholder="" />
+            <label for="login-email">Email</label>
+          </div>
+
+          <!-- Contraseña -->
+          <div class="custom-input" id="login-password-input">
+            <input type="password" id="login-password" placeholder="" />
+            <label for="login-password">Password</label>
+          </div>
+
+          <!-- Aceptar términos -->
+          <div class="custom-terms-container" id="remember-me-container">
+            <input type="checkbox" class="form-check-input" id="remember-me" />
+            <label class="form-check-label" for="remember-me"
+              >Remember Me</label
+            >
+          </div>
+
+          <!-- Botón de login -->
+          <button type="submit" class="custom-button" id="login-button">
+            Login
+          </button>
+        </form>
+
+        <!-- Enlace de registro -->
+        <div class="custom-signup-container" id="signup-container">
+          <span id="signup-text">Don't have an account? </span>
+          <a href="#" id="signup-link">Create One</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
