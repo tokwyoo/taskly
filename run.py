@@ -1,13 +1,8 @@
-from flask import Flask
+# Archivo exclusivo para desarrollo.  
+# Ejecuta la aplicación Flask con el servidor integrado.  
+# No usar en producción.  
 
-def create_app():
-    app = Flask(__name__)
-
-    @app.route("/")
-    def hello():
-        return "<h1 style='color:blue'>Hello There! - Taskly App</h1>"
-
-    return app
+from app import create_app
 
 if __name__ == "__main__":
     app = create_app()

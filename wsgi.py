@@ -1,3 +1,6 @@
-from run import create_app
+# Archivo de entrada para producción.  
+# Diseñado para usarse con un servidor WSGI como Gunicorn.  
 
-app = create_app() # Usado por Gunicorn 
+from app import create_app
+
+app = create_app()
