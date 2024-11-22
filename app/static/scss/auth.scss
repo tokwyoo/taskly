@@ -49,7 +49,7 @@
   justify-content: center;
 }
 
-.custom-signin-container {
+.custom-signin-container, .custom-signup-container {
   @extend .text-center;
   @extend .mt-3;
 

@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
-.text-manrope-bold, .custom-signin-container a, .custom-signin-container span, .custom-button, .custom-terms-container .form-check-label, .custom-input label, .custom-heading {
+.text-manrope-bold, .custom-signin-container a, .custom-signup-container a, .custom-signin-container span, .custom-signup-container span, .custom-button, .custom-terms-container .form-check-label, .custom-input label, .custom-heading {
   font-family: 'Manrope', sans-serif !important;
   font-weight: 700 !important; }
 
@@ -18,9 +18,9 @@
   align-items: center;
   justify-content: center; }
 
-.custom-signin-container a {
+.custom-signin-container a, .custom-signup-container a {
   text-decoration: none; }
-  .custom-signin-container a:hover {
+  .custom-signin-container a:hover, .custom-signup-container a:hover {
     text-decoration: underline; }
 
 /*!
@@ -308,7 +308,7 @@ b,
 strong {
   font-weight: bolder; }
 
-small, .small, .custom-signin-container span, .custom-signin-container a {
+small, .small, .custom-signin-container span, .custom-signup-container span, .custom-signin-container a, .custom-signup-container a {
   font-size: 0.875em; }
 
 mark, .mark {
@@ -6510,7 +6510,7 @@ textarea.form-control-lg {
 .mt-2 {
   margin-top: 0.5rem !important; }
 
-.mt-3, .custom-signin-container {
+.mt-3, .custom-signin-container, .custom-signup-container {
   margin-top: 1rem !important; }
 
 .mt-4 {
@@ -6843,7 +6843,7 @@ textarea.form-control-lg {
 .text-end {
   text-align: right !important; }
 
-.text-center, .custom-heading, .custom-signin-container {
+.text-center, .custom-heading, .custom-signin-container, .custom-signup-container {
   text-align: center !important; }
 
 .text-decoration-none {
@@ -6876,11 +6876,11 @@ textarea.form-control-lg {
   word-break: break-word !important; }
 
 /* rtl:end:remove */
-.text-primary, .custom-signin-container a {
+.text-primary, .custom-signin-container a, .custom-signup-container a {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-primary-rgb), var(--bs-text-opacity)) !important; }
 
-.text-secondary, .custom-signin-container span {
+.text-secondary, .custom-signin-container span, .custom-signup-container span {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-secondary-rgb), var(--bs-text-opacity)) !important; }
 
