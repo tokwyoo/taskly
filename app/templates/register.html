@@ -18,37 +18,83 @@
       <div class="w-100" style="max-width: 400px" id="form-wrapper">
         <h2 class="custom-heading" id="register-heading">Sign Up</h2>
 
-        <form id="register-form">
+        <!-- Mensajes Flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}" role="alert">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <!-- Formulario de registro -->
+        <form id="register-form" action="{{ url_for('auth.register_post') }}" method="POST">
           <!-- Nombre -->
           <div class="custom-input" id="name-input">
-            <input type="text" id="name" placeholder="" />
+            <input 
+              type="text" 
+              name="name" 
+              id="name" 
+              placeholder="" 
+              required 
+              value="{{ request.form.name }}"
+            />
             <label for="name">Name</label>
           </div>
 
           <!-- Correo electrónico -->
           <div class="custom-input" id="email-input">
-            <input type="email" id="email" placeholder="" />
+            <input 
+              type="email" 
+              name="email" 
+              id="email" 
+              placeholder="" 
+              required 
+              value="{{ request.form.email }}"
+            />
             <label for="email">Email</label>
           </div>
 
           <!-- Contraseña -->
           <div class="custom-input" id="password-input">
-            <input type="password" id="password" placeholder="" />
+            <input 
+              type="password" 
+              name="password" 
+              id="password" 
+              placeholder="" 
+              required 
+              minlength="6"
+            />
             <label for="password">Password</label>
           </div>
 
           <!-- Re-ingresar contraseña -->
           <div class="custom-input" id="repassword-input">
-            <input type="password" id="repassword" placeholder="" />
+            <input 
+              type="password" 
+              name="repassword" 
+              id="repassword" 
+              placeholder="" 
+              required 
+              minlength="6"
+            />
             <label for="repassword">Re-enter password</label>
           </div>
 
           <!-- Aceptar términos -->
           <div class="custom-terms-container" id="terms-container">
-            <input type="checkbox" class="form-check-input" id="terms" />
-            <label class="form-check-label" for="terms"
-              >I agree to all terms</label
-            >
+            <input 
+              type="checkbox" 
+              class="form-check-input" 
+              id="terms" 
+              name="terms" 
+              required 
+            />
+            <label class="form-check-label" for="terms">
+              I agree to all terms and conditions
+            </label>
           </div>
 
           <!-- Botón de registro -->
@@ -60,7 +106,7 @@
         <!-- Enlace de inicio de sesión -->
         <div class="custom-signin-container" id="signin-container">
           <span id="signin-text">Already have an account? </span>
-          <a href="#" id="signin-link">Sign In</a>
+          <a href="{{ url_for('auth.login') }}" id="signin-link">Sign In</a>
         </div>
       </div>
     </div>
