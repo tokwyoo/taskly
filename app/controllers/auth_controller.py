@@ -9,6 +9,8 @@ auth_bp = Blueprint("auth", __name__)
 
 @auth_bp.route("/register", methods=["GET"])
 def register():
+    if "user_id" in session:
+        return redirect(url_for("home.home"))
     return render_template("register.html")
 
 
@@ -79,6 +81,8 @@ def register_post():
 
 @auth_bp.route("/login", methods=["GET"])
 def login():
+    if "user_id" in session:
+        return redirect(url_for("home.home"))
     return render_template("login.html")
 
 
