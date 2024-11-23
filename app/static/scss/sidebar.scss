@@ -1,81 +1,129 @@
+/* Estilo base para el body */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Manrope', sans-serif !important; /* Aplica Manrope globalmente */
+}
 
-        body {
-            margin: 0;
-            padding: 0;
-        }
+/* Contenedor */
+.container-fluid {
+    height: 100vh;
+    overflow: hidden;
+}
 
-        .container-fluid {
-            height: 100vh;
-            overflow: hidden;
-        }
+/* Sidebar */
+#sidebar {
+    background-color: #D5DFE5;
+    height: 100%;
+    width: 250px;
+    padding: 20px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
 
-        /* Sidebar */
-        #sidebar {
-            background-color: #D5DFE5;
-            height: 100%;
-            width: 250px;
-            padding: 20px;
-            border-top-right-radius: 50px;
-            border-bottom-right-radius: 50px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
+/* Estilo para los elementos dentro del sidebar */
+#sidebar .nav-item {
+    margin-bottom: 15px;
+    width: 100%;
+}
 
-        #sidebar .nav-item {
-            margin-bottom: 15px;
-            width: 100%;
-        }
+/* Estilo común para todos los enlaces, botones y spans dentro de .nav-item */
+#sidebar .nav-item > a,
+#sidebar .nav-item > span,
+#sidebar .nav-item > button {
+    display: flex;
+    align-items: center;
+    text-decoration: none !important; /* Eliminar subrayado */
+    color: #0B1215 !important; /* Color del texto */
+    font-weight: 700 !important; /* Peso de la fuente */
+    font-family: 'Manrope', sans-serif !important; /* Fuente Manrope */
+    background-color: transparent !important; /* Eliminar fondo */
+}
 
-        #sidebar .nav-item a {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: #0B1215;
-            font-weight: 700;
-            font-family: Manrope, sans-serif;
-        }
+/* Si hay icono, darle estilo */
+#sidebar .nav-item .icon {
+    width: 24px;
+    height: 24px;
+    background-color: #0B1215;
+    margin-right: 10px;
+}
 
-        #sidebar .nav-item a .icon {
-            width: 24px;
-            height: 24px;
-            background-color: #0B1215;
-            margin-right: 10px;
-        }
+/* Evitar que los enlaces se pongan azules al pasar el mouse o estar activos */
+#sidebar .nav-item a:hover,
+#sidebar .nav-item a:focus,
+#sidebar .nav-item a:active,
+#sidebar .nav-item span:hover,
+#sidebar .nav-item span:focus,
+#sidebar .nav-item span:active,
+#sidebar .nav-item button:hover,
+#sidebar .nav-item button:focus,
+#sidebar .nav-item button:active {
+    color: #0B1215 !important;
+    background-color: transparent !important; /* Eliminar cualquier fondo */
+    border: none !important;
+}
 
-        /* Contenido principal */
-        #content {
-            flex-grow: 1;
-            padding: 20px;
-            height: 100%;
-            overflow-y: auto;
-        }
+/* Asegurarse de que el botón de logout también mantenga el estilo */
+#sidebar .nav-item form button {
+    font-family: 'Manrope', sans-serif !important; /* Aplica Manrope también a los botones */
+    font-weight: 700 !important; /* Aplica peso 700 también a los botones */
+    color: #0B1215 !important; /* Color de texto en los botones */
+    background: none !important; /* Eliminar fondo */
+    border: none !important; /* Eliminar borde */
+    text-decoration: none !important; /* Eliminar cualquier subrayado */
+}
 
-        /* Diseño responsivo */
-        @media (max-width: 768px) {
-            .container-fluid {
-                flex-direction: column;
-            }
+/* Evitar que los botones de logout se vean diferentes al interactuar */
+#sidebar .nav-item form button:focus,
+#sidebar .nav-item form button:hover {
+    color: #0B1215 !important;
+    background: none !important;
+    border: none !important;
+}
 
-            #sidebar {
-                width: 100%;
-                height: auto;
-                padding: 10px 0;
-                border-radius: 0;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-around;
-            }
+/* Contenido principal */
+#content {
+    flex-grow: 1;
+    padding: 20px;
+    height: 100%;
+    overflow-y: auto;
+}
 
-            #sidebar .nav-item {
-                margin-bottom: 0;
-                width: auto;
-            }
+/* Diseño responsivo */
+@media (max-width: 768px) {
+    .container-fluid {
+        flex-direction: column;
+    }
 
-            #content {
-                margin-top: 80px; /* Espacio para el sidebar en móviles */
-                padding-top: 20px;
-            }
-        }
+    #sidebar {
+        width: 100%;
+        height: auto;
+        padding: 10px 0;
+        border-radius: 0;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+    }
 
-        @import "../bootstrap-5.3.3/scss/bootstrap";
+    #sidebar .nav-item {
+        margin-bottom: 0;
+        width: auto;
+    }
+
+    #content {
+        margin-top: 80px; /* Espacio para el sidebar en móviles */
+        padding-top: 20px;
+    }
+}
+
+@import "../bootstrap-5.3.3/scss/bootstrap";
+
+
+/* Importar la fuente Manrope */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@700&display=swap');
+
+
+@import "../bootstrap-5.3.3/scss/bootstrap";
