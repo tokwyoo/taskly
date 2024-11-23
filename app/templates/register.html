@@ -1,114 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Taskly - Register</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/auth.css') }}"
-    />
-  </head>
 
-  <body class="bg-light">
-    <div
-      class="container d-flex justify-content-center align-items-center min-vh-100"
-      id="register-container"
-    >
-      <div class="w-100" style="max-width: 400px" id="form-wrapper">
-        <h2 class="custom-heading" id="register-heading">Sign Up</h2>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Taskly - Register</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}" />
+</head>
 
-        <!-- Mensajes Flash -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="alert alert-{{ category }}" role="alert">
-                {{ message }}
-              </div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
+<body class="bg-light">
+  <div class="container d-flex justify-content-center align-items-center min-vh-100" id="register-container">
+    <div class="w-100" style="max-width: 400px" id="form-wrapper">
+      <h2 class="custom-heading" id="register-heading">Sign Up</h2>
 
-        <!-- Formulario de registro -->
-        <form id="register-form" action="{{ url_for('auth.register_post') }}" method="POST">
-          <!-- Nombre -->
-          <div class="custom-input" id="name-input">
-            <input 
-              type="text" 
-              name="name" 
-              id="name" 
-              placeholder="" 
-              required 
-              value="{{ request.form.name }}"
-            />
-            <label for="name">Name</label>
-          </div>
+      <!-- Mensajes Flash -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      {% for category, message in messages %}
+      <div class="alert alert-{{ category }}" role="alert">
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
 
-          <!-- Correo electrónico -->
-          <div class="custom-input" id="email-input">
-            <input 
-              type="email" 
-              name="email" 
-              id="email" 
-              placeholder="" 
-              required 
-              value="{{ request.form.email }}"
-            />
-            <label for="email">Email</label>
-          </div>
-
-          <!-- Contraseña -->
-          <div class="custom-input" id="password-input">
-            <input 
-              type="password" 
-              name="password" 
-              id="password" 
-              placeholder="" 
-              required 
-              minlength="6"
-            />
-            <label for="password">Password</label>
-          </div>
-
-          <!-- Re-ingresar contraseña -->
-          <div class="custom-input" id="repassword-input">
-            <input 
-              type="password" 
-              name="repassword" 
-              id="repassword" 
-              placeholder="" 
-              required 
-              minlength="6"
-            />
-            <label for="repassword">Re-enter password</label>
-          </div>
-
-          <!-- Aceptar términos -->
-          <div class="custom-terms-container" id="terms-container">
-            <input 
-              type="checkbox" 
-              class="form-check-input" 
-              id="terms" 
-              name="terms" 
-              required 
-            />
-            <label class="form-check-label" for="terms">
-              I agree to all terms and conditions
-            </label>
-          </div>
-
-          <!-- Botón de registro -->
-          <button type="submit" class="custom-button" id="register-button">
-            Register
-          </button>
-        </form>
-
-        <!-- Enlace de inicio de sesión -->
-        <div class="custom-signin-container" id="signin-container">
-          <span id="signin-text">Already have an account? </span>
-          <a href="{{ url_for('auth.login') }}" id="signin-link">Sign In</a>
+      <!-- Formulario de registro -->
+      <form id="register-form" action="{{ url_for('auth.register_post') }}" method="POST">
+        <!-- Nombre -->
+        <div class="custom-input" id="name-input">
+          <input type="text" name="name" id="name" placeholder="" required value="{{ request.form.name }}" />
+          <label for="name">Name</label>
         </div>
+
+        <!-- Correo electrónico -->
+        <div class="custom-input" id="email-input">
+          <input type="email" name="email" id="email" placeholder="" required value="{{ request.form.email }}" />
+          <label for="email">Email</label>
+        </div>
+
+        <!-- Contraseña -->
+        <div class="custom-input" id="password-input">
+          <input type="password" name="password" id="password" placeholder="" required minlength="6" />
+          <label for="password">Password</label>
+        </div>
+
+        <!-- Re-ingresar contraseña -->
+        <div class="custom-input" id="repassword-input">
+          <input type="password" name="repassword" id="repassword" placeholder="" required minlength="6" />
+          <label for="repassword">Re-enter password</label>
+        </div>
+
+        <!-- Aceptar términos -->
+        <div class="custom-terms-container" id="terms-container">
+          <input type="checkbox" class="form-check-input" id="terms" name="terms" required />
+          <label class="form-check-label" for="terms">
+            I agree to all terms and conditions
+          </label>
+        </div>
+
+        <!-- Botón de registro -->
+        <button type="submit" class="custom-button" id="register-button">
+          Register
+        </button>
+      </form>
+
+      <!-- Enlace de inicio de sesión -->
+      <div class="custom-signin-container" id="signin-container">
+        <span id="signin-text">Already have an account? </span>
+        <a href="{{ url_for('auth.login') }}" id="signin-link">Sign In</a>
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
