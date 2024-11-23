@@ -86,11 +86,14 @@
                         </a>
                     </li>
                     <li class="nav-item d-flex align-items-center">
-                        <a class="nav-link" href="#">
-                            <span class="material-icons-round me-1">logout</span>
-                            Logout
-                        </a>
+                        <form action="{{ url_for('auth.logout_post') }}" method="POST" style="display: inline;">
+                            <button type="submit" class="btn btn-link nav-link d-flex align-items-center" style="border: none; background: none;">
+                                <span class="material-icons-round me-1">logout</span>
+                                Logout
+                            </button>
+                        </form>
                     </li>
+                    
                 </ul>
             </nav>
 

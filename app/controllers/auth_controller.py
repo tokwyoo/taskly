@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, session, url_for, flash
 from app.db import db
 from app.models.user import User
 from werkzeug.security import check_password_hash
@@ -100,6 +100,7 @@ def login_post():
         # Verificar si el usuario existe y la contraseña es correcta
         if user:
             if check_password_hash(user.password, password):
+                session["user_id"] = user.id  # Guardar el ID del usuario en la sesión
                 flash("Login successful!", "success")
                 return redirect(url_for("home.home"))
             else:
@@ -113,3 +114,26 @@ def login_post():
         # flash(f"An error occurred during login. Please try again. Error: {str(e)}", "error")
         flash(f"An error occurred during login. Please try again.")
         return redirect(url_for("auth.login"))
+
+
+@auth_bp.route("/logout", methods=["POST"])
+def logout_post():
+    try:
+        # Eliminar los datos de sesión (esto cierra la sesión del usuario)
+        session.pop(
+            "user_id", None
+        )  # Suponiendo que guardas el ID del usuario en la sesión
+
+        # Limpiar cualquier mensaje flash previo
+        session.pop("_flashes", None)
+
+        flash("You have been logged out successfully.", "success")
+        return redirect(url_for("auth.login"))
+
+    except Exception as e:
+        # En caso de error, mostrar el mensaje correspondiente
+        flash(
+            f"An error occurred during logout. Please try again. Error: {str(e)}",
+            "error",
+        )
+        return redirect(url_for("home.home"))
