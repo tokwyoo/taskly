@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row h-100">
+            <!-- Sidebar -->
+            <nav id="sidebar">
+                <div class="d-flex align-items-center mb-4">
+                    <img src="https://via.placeholder.com/70x70" alt="Foto" class="img-fluid me-3"
+                        style="width: 70px; height: 70px;">
+                    <div class="h5 mb-0">Dino</div>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="#">
+                            <span class="material-icons-round me-1">search</span>
+                            Search
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="#">
+                            <span class="material-icons-round me-1">home</span>
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="#">
+                            <span class="material-icons-round me-1">inbox</span>
+                            Inbox
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span>Lists</span>
+                        </a>
+                        <!-- Submenú siempre visible -->
+                        <ul class="list-unstyled ps-4">
+                            {% if lists and lists|length > 0 %}
+                            {% for list_item in lists %}
+                            <li class="nav-item">
+                                <a href="{{ list_item.url }}" class="nav-link d-flex align-items-center">
+                                    <span class="material-icons-round me-1">library_books</span>
+                                    <span>{{ list_item.name }}</span>
+                                </a>
+                            </li>
+                            {% endfor %}
+                            {% endif %}
+                            <!-- Botón Add, siempre visible -->
+                            <li class="nav-item">
+                                <a href="#" class="nav-link d-flex align-items-center">
+                                    <span class="material-icons-round me-1">add</span>
+                                    <span>Add</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="#">
+                            <span class="material-icons-round me-1">timer</span>
+                            Pomodoro
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="#">
+                            <span class="material-icons-round me-1">settings</span>
+                            Settings
+                        </a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="nav-link" href="#">
+                            <span class="material-icons-round me-1">restore_from_trash</span>
+                            Trash
+                        </a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="nav-link" href="#">
+                            <span class="material-icons-round me-1">logout</span>
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Contenido principal -->
+            <main id="content" class="col">
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
+</html>

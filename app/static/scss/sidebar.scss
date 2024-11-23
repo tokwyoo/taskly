@@ -1,0 +1,81 @@
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container-fluid {
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        #sidebar {
+            background-color: #D5DFE5;
+            height: 100%;
+            width: 250px;
+            padding: 20px;
+            border-top-right-radius: 50px;
+            border-bottom-right-radius: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        #sidebar .nav-item {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        #sidebar .nav-item a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #0B1215;
+            font-weight: 700;
+            font-family: Manrope, sans-serif;
+        }
+
+        #sidebar .nav-item a .icon {
+            width: 24px;
+            height: 24px;
+            background-color: #0B1215;
+            margin-right: 10px;
+        }
+
+        /* Contenido principal */
+        #content {
+            flex-grow: 1;
+            padding: 20px;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        /* Diseño responsivo */
+        @media (max-width: 768px) {
+            .container-fluid {
+                flex-direction: column;
+            }
+
+            #sidebar {
+                width: 100%;
+                height: auto;
+                padding: 10px 0;
+                border-radius: 0;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-around;
+            }
+
+            #sidebar .nav-item {
+                margin-bottom: 0;
+                width: auto;
+            }
+
+            #content {
+                margin-top: 80px; /* Espacio para el sidebar en móviles */
+                padding-top: 20px;
+            }
+        }
+
+        @import "../bootstrap-5.3.3/scss/bootstrap";
