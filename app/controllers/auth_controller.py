@@ -106,6 +106,10 @@ def login_post():
             if check_password_hash(user.password, password):
                 session["user_id"] = user.id  # Guardar el ID del usuario en la sesión
                 session['user_name'] = user.name
+                session['user_email'] = user.email
+                session['user_password'] = user.password
+                session['user_profile_picture'] = user.profile_picture if user.profile_picture else 'https://via.placeholder.com/70x70'
+
                 flash("Login successful!", "success")
                 return redirect(url_for("home.home"))
             else:
