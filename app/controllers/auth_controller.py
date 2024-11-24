@@ -105,6 +105,7 @@ def login_post():
         if user:
             if check_password_hash(user.password, password):
                 session["user_id"] = user.id  # Guardar el ID del usuario en la sesión
+                session['user_name'] = user.name
                 flash("Login successful!", "success")
                 return redirect(url_for("home.home"))
             else:

@@ -10,90 +10,88 @@
 </head>
 
 <body>
-
     <div class="container-fluid">
         <div class="row h-100">
             <!-- Sidebar -->
-            <nav id="sidebar">
-                <div class="d-flex align-items-center mb-4">
+            <nav id="sidebar" class="d-flex flex-column">
+                <div class="d-flex align-items-center mt-4 mb-5">
                     <img src="https://via.placeholder.com/70x70" alt="Foto" class="img-fluid me-3"
                         style="width: 70px; height: 70px;">
-                    <div class="h5 mb-0">Dino</div>
+                    <div class="h5 mb-0 text-truncate w-100">{{ session.get('user_name', 'Invitado') }}</div>
                 </div>
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="#">
-                            <span class="material-icons-round me-1">search</span>
-                            Search
-                        </a>
+                        <form action="#" method="" style="display: inline;">
+                            <button type="submit" class="nav-link d-flex align-items-center"
+                                style="border: none; background: none;">
+                                <span class="material-icons-round me-1">search</span>
+                                Search
+                            </button>
+                        </form>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="#">
-                            <span class="material-icons-round me-1">home</span>
-                            Home
-                        </a>
+                        <form action="#" method="" style="display: inline;">
+                            <button type="submit" class="nav-link d-flex align-items-center"
+                                style="border: none; background: none;">
+                                <span class="material-icons-round me-1">home</span>
+                                Home
+                            </button>
+                        </form>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="#">
-                            <span class="material-icons-round me-1">inbox</span>
-                            Inbox
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span>Lists</span>
-                        </a>
-                        <!-- Submenú siempre visible -->
-                        <ul class="list-unstyled ps-4">
-                            {% if lists and lists|length > 0 %}
-                            {% for list_item in lists %}
-                            <li class="nav-item">
-                                <a href="{{ list_item.url }}" class="nav-link d-flex align-items-center">
-                                    <span class="material-icons-round me-1">library_books</span>
-                                    <span>{{ list_item.name }}</span>
-                                </a>
-                            </li>
-                            {% endfor %}
-                            {% endif %}
-                            <!-- Botón Add, siempre visible -->
-                            <li class="nav-item">
-                                <a href="#" class="nav-link d-flex align-items-center">
-                                    <span class="material-icons-round me-1">add</span>
-                                    <span>Add</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="#">
-                            <span class="material-icons-round me-1">timer</span>
-                            Pomodoro
-                        </a>
+                        <form action="#" method="" style="display: inline;">
+                            <button type="submit" class="nav-link d-flex align-items-center"
+                                style="border: none; background: none;">
+                                <span class="material-icons-round me-1">inbox</span>
+                                Inbox
+                            </button>
+                        </form>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="#">
-                            <span class="material-icons-round me-1">settings</span>
-                            Settings
-                        </a>
+                        <form action="#" method="" style="display: inline;">
+                            <button type="submit" class="nav-link d-flex align-items-center"
+                                style="border: none; background: none;">
+                                <span class="material-icons-round me-1">library_books</span>
+                                Lists
+                            </button>
+                        </form>
                     </li>
-                    <li class="nav-item d-flex align-items-center">
-                        <a class="nav-link" href="#">
-                            <span class="material-icons-round me-1">restore_from_trash</span>
-                            Trash
-                        </a>
+                    <li class="nav-item">
+                        <form action="#" method="" style="display: inline;">
+                            <button type="submit" class="nav-link d-flex align-items-center"
+                                style="border: none; background: none;">
+                                <span class="material-icons-round me-1">timer</span>
+                                Pomodoro
+                            </button>
+                        </form>
                     </li>
-                    <li class="nav-item d-flex align-items-center">
+                    <li class="nav-item">
+                        <form action="#" method="" style="display: inline;">
+                            <button type="submit" class="nav-link d-flex align-items-center"
+                                style="border: none; background: none;">
+                                <span class="material-icons-round me-1">settings</span>
+                                Settings
+                            </button>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <form action="#" method="" style="display: inline;">
+                            <button type="submit" class="nav-link d-flex align-items-center"
+                                style="border: none; background: none;">
+                                <span class="material-icons-round me-1">restore_from_trash</span>
+                                Trash
+                            </button>
+                        </form>
+                    </li>
+                    <li class="nav-item">
                         <form action="{{ url_for('auth.logout_post') }}" method="POST" style="display: inline;">
-                            <button type="submit" class="btn btn-link nav-link d-flex align-items-center" style="border: none; background: none;">
+                            <button type="submit" class="nav-link d-flex align-items-center"
+                                style="border: none; background: none;">
                                 <span class="material-icons-round me-1">logout</span>
                                 Logout
                             </button>
                         </form>
                     </li>
-                    
                 </ul>
             </nav>
 
@@ -103,5 +101,6 @@
             </main>
         </div>
     </div>
+</body>
 
 </html>
