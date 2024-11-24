@@ -77,14 +77,14 @@ CREATE TABLE "notification" (
 );
 
 -- Agregar las claves foráneas
-ALTER TABLE "token" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
+ALTER TABLE "token" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id") ON DELETE CASCADE;
 
-ALTER TABLE "session" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
+ALTER TABLE "session" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id") ON DELETE CASCADE;
 
-ALTER TABLE "list" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
+ALTER TABLE "list" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id") ON DELETE CASCADE;
 
-ALTER TABLE "task" ADD FOREIGN KEY ("list_id") REFERENCES "list" ("id");
+ALTER TABLE "task" ADD FOREIGN KEY ("list_id") REFERENCES "list" ("id") ON DELETE CASCADE;
 
-ALTER TABLE "notification" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
+ALTER TABLE "notification" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id") ON DELETE CASCADE;
 
-ALTER TABLE "notification" ADD FOREIGN KEY ("task_id") REFERENCES "task" ("id");
+ALTER TABLE "notification" ADD FOREIGN KEY ("task_id") REFERENCES "task" ("id") ON DELETE CASCADE;
