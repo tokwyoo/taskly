@@ -15,9 +15,14 @@
             <!-- Sidebar -->
             <nav id="sidebar" class="d-flex flex-column">
                 <div class="d-flex align-items-center mt-4 mb-5">
-                    <img src="https://via.placeholder.com/70x70" alt="Foto" class="img-fluid me-3"
-                        style="width: 70px; height: 70px;">
-                    <div class="h5 mb-0 text-truncate w-100">{{ session.get('user_name', 'Invitado') }}</div>
+
+
+                    <img src="{{ user.profile_picture if user.profile_picture else '/static/images/default-avatar.png' }}"
+                         alt="Foto" class="img-fluid me-3" 
+                         style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover;">
+
+                    <div class="h5 mb-0 text-truncate w-100">{{ user.name }}</div>
+
                 </div>
                 <ul class="nav flex-column">
                     <li class="nav-item">
