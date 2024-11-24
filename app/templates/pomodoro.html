@@ -4,7 +4,39 @@
 
 {% block content %}
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pomodoro.css') }}" />
+</head>
+
+<body>
     <h1>Pomodoro</h1>
-    <p>Aquí va el contenido principal de la página.</p>
+    <div class="container">
+        <div class="timer-container">
+            <button id="pomodorobtn" class="active">Pomodoro</button>
+            <button id="shortbrkbtn">Shortbreak</button>
+            <button id="longbrkbtn">Long break</button>
+        </div>
+        <div class="pomdoro-count"></div>
+        <div class="progressbar">
+            <div class="progrsbar-inner">
+                <h2 class="progressbar-number">25:00</h2>
+            </div>
+        </div>
+        <div class="function-buttons">
+            <button id="startbtn">Start</button>
+            <button id="pausebtn">Pause</button>
+            <button id="resetbtn">Reset</button>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/pomodoro.js') }}"></script>
+</body>
+
+</html>
 
 {% endblock %}
