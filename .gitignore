@@ -164,3 +164,8 @@ cython_debug/
 ##
 
 taskly.sock
+
+
+app/static/css/*
+
+app/static/uploads/profile_photos/*
