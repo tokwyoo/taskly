@@ -1,109 +1,76 @@
-@charset "UTF-8";
-/* Estilo base para el body */
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@700&display=swap");
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Manrope', sans-serif !important;
-  /* Aplica Manrope globalmente */ }
+  font-family: 'Manrope', sans-serif !important; }
 
-/* Contenedor */
 .container-fluid, .container-xxl, .container-xl, .container-lg, .container-md, .container-sm {
   height: 100vh;
   overflow: hidden; }
 
-/* Sidebar */
+.container-fluid, .container-xxl, .container-xl, .container-lg, .container-md, .container-sm {
+  height: 100vh;
+  overflow: hidden; }
+
 #sidebar {
   background-color: #D5DFE5;
   height: 100%;
   width: 250px;
   padding: 10px 15px;
-  /* Reducir padding para más compacidad */
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
   display: flex;
   flex-direction: column;
   align-items: flex-start; }
 
-/* Imagen de perfil y nombre */
 #sidebar .d-flex.align-items-center {
   margin-bottom: 10px;
-  /* Reducir margen */
   padding: 0;
-  /* Eliminar padding innecesario */
-  width: 100%;
-  /* Asegurar que el contenedor ocupe todo el ancho */ }
-
-#sidebar img {
-  margin-right: 10px;
-  /* Reducir el margen a la derecha de la imagen */ }
-
-/* Asegurarse que el texto del nombre no se desborde */
-#sidebar .h5 {
-  white-space: nowrap;
-  /* Evita dividir palabras en varias líneas */
-  overflow: hidden;
-  /* Oculta cualquier texto que exceda el contenedor */
-  text-overflow: ellipsis;
-  /* Agrega "..." si el texto es muy largo */
-  max-width: calc(100% - 90px);
-  /* Ajusta el ancho restante después de la imagen */
-  display: inline-block;
-  /* Asegura que el texto no se divida en múltiples líneas */ }
-
-/* Estilo para los elementos dentro del sidebar */
-#sidebar .nav-item {
-  margin-bottom: 10px;
-  /* Reducir margen inferior */
   width: 100%; }
 
-/* Estilo común para todos los enlaces dentro de .nav-item */
+#sidebar img {
+  margin-right: 10px; }
+
+#sidebar .h5 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 90px);
+  display: inline-block; }
+
+#sidebar .nav-item {
+  margin-bottom: 10px;
+  width: 100%; }
+
 #sidebar .nav-item > a,
 #sidebar .nav-item > span,
 #sidebar .nav-item > button {
   display: flex;
   align-items: center;
   text-decoration: none !important;
-  /* Eliminar subrayado */
   color: #0B1215 !important;
-  /* Color del texto */
   font-weight: 700 !important;
-  /* Peso de la fuente */
   font-family: 'Manrope', sans-serif !important;
-  /* Fuente Manrope */
   background-color: transparent !important;
-  /* Eliminar fondo */
   padding: 5px 10px;
-  /* Reducir el padding de los enlaces */
   border-radius: 5px;
-  /* Añadir bordes redondeados */
-  transition: background-color 0.3s ease, color 0.3s ease;
-  /* Suavizar la transición de fondo y color */ }
+  transition: background-color 0.3s ease, color 0.3s ease; }
 
-/* Efecto hover */
 #sidebar .nav-item > a:hover,
 #sidebar .nav-item > button:hover {
   background-color: #A2B9C1;
-  /* Color más notorio al pasar el mouse */
-  color: #4a4a4a !important;
-  /* Mantener color del texto */ }
+  color: #4a4a4a !important; }
 
-/* Efecto hover para los botones de formularios */
 #sidebar .nav-item form button:hover {
   background-color: #A2B9C1 !important;
-  /* Mismo color al pasar el mouse */
-  color: #4a4a4a !important;
-  /* Color de texto */ }
+  color: #4a4a4a !important; }
 
-/* Estilo para los iconos dentro del sidebar */
 #sidebar .nav-item .icon {
   width: 24px;
   height: 24px;
   background-color: #0B1215;
-  margin-right: 8px;
-  /* Ajustar el espacio entre el icono y el texto */ }
+  margin-right: 8px; }
 
-/* Evitar que los enlaces se pongan azules al pasar el mouse o estar activos */
 #sidebar .nav-item a:hover,
 #sidebar .nav-item a:focus,
 #sidebar .nav-item a:active,
@@ -115,40 +82,28 @@ body {
 #sidebar .nav-item button:active {
   color: #4a4a4a !important;
   background-color: transparent !important;
-  /* Eliminar cualquier fondo */
-  border: none !important;
-  /* Eliminar borde */ }
+  border: none !important; }
 
-/* Asegurarse de que el botón de logout también mantenga el estilo */
 #sidebar .nav-item form button {
   font-family: 'Manrope', sans-serif !important;
-  /* Aplica Manrope también a los botones */
   font-weight: 700 !important;
-  /* Aplica peso 700 también a los botones */
   color: #0B1215 !important;
-  /* Color de texto en los botones */
   background: none !important;
-  /* Eliminar fondo */
   border: none !important;
-  /* Eliminar borde */
-  text-decoration: none !important;
-  /* Eliminar cualquier subrayado */ }
+  text-decoration: none !important; }
 
-/* Evitar que los botones de logout se vean diferentes al interactuar */
 #sidebar .nav-item form button:focus,
 #sidebar .nav-item form button:hover {
   color: #4a4a4a !important;
   background: none !important;
   border: none !important; }
 
-/* Contenido principal */
 #content {
   flex-grow: 1;
   padding: 20px;
   height: 100%;
   overflow-y: auto; }
 
-/* Diseño responsivo */
 @media (max-width: 768px) {
   .container-fluid, .container-xxl, .container-xl, .container-lg, .container-md, .container-sm {
     flex-direction: column; }
@@ -165,11 +120,8 @@ body {
     width: auto; }
   #content {
     margin-top: 80px;
-    /* Espacio para el sidebar en móviles */
     padding-top: 20px; } }
 
-/* Importar la fuente Manrope */
-/* Importar Bootstrap */
 /*!
    * Bootstrap  v5.3.3 (https://getbootstrap.com/)
    * Copyright 2011-2024 The Bootstrap Authors

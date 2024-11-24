@@ -21,7 +21,7 @@
                 </div>
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <form action="#" method="" style="display: inline;">
+                        <form action="{{ url_for('search.search') }}" method="GET" style="display: inline;">
                             <button type="submit" class="nav-link d-flex align-items-center"
                                 style="border: none; background: none;">
                                 <span class="material-icons-round me-1">search</span>
@@ -30,8 +30,8 @@
                         </form>
                     </li>
                     <li class="nav-item">
-                        <form action="#" method="" style="display: inline;">
-                            <button type="submit" class="nav-link d-flex align-items-center"
+                        <form action="{{ url_for('home.home') }}" method="GET" style="display: inline;"> <button
+                                type="submit" class="nav-link d-flex align-items-center"
                                 style="border: none; background: none;">
                                 <span class="material-icons-round me-1">home</span>
                                 Home
@@ -39,7 +39,7 @@
                         </form>
                     </li>
                     <li class="nav-item">
-                        <form action="#" method="" style="display: inline;">
+                        <form action="{{ url_for('inbox.inbox') }}" method="GET" style="display: inline;">
                             <button type="submit" class="nav-link d-flex align-items-center"
                                 style="border: none; background: none;">
                                 <span class="material-icons-round me-1">inbox</span>
@@ -48,7 +48,7 @@
                         </form>
                     </li>
                     <li class="nav-item">
-                        <form action="#" method="" style="display: inline;">
+                        <form action="{{ url_for('lists.lists') }}" method="GET" style="display: inline;">
                             <button type="submit" class="nav-link d-flex align-items-center"
                                 style="border: none; background: none;">
                                 <span class="material-icons-round me-1">library_books</span>
@@ -57,7 +57,7 @@
                         </form>
                     </li>
                     <li class="nav-item">
-                        <form action="#" method="" style="display: inline;">
+                        <form action="{{ url_for('pomodoro.pomodoro') }}" method="GET" style="display: inline;">
                             <button type="submit" class="nav-link d-flex align-items-center"
                                 style="border: none; background: none;">
                                 <span class="material-icons-round me-1">timer</span>
@@ -66,7 +66,7 @@
                         </form>
                     </li>
                     <li class="nav-item">
-                        <form action="#" method="" style="display: inline;">
+                        <form action="{{ url_for('user.settings') }}" method="GET" style="display: inline;">
                             <button type="submit" class="nav-link d-flex align-items-center"
                                 style="border: none; background: none;">
                                 <span class="material-icons-round me-1">settings</span>
@@ -75,7 +75,7 @@
                         </form>
                     </li>
                     <li class="nav-item">
-                        <form action="#" method="" style="display: inline;">
+                        <form action="{{ url_for('trash.trash') }}" method="GET" style="display: inline;">
                             <button type="submit" class="nav-link d-flex align-items-center"
                                 style="border: none; background: none;">
                                 <span class="material-icons-round me-1">restore_from_trash</span>
