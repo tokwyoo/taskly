@@ -4,6 +4,16 @@ body {
     font-family: 'Manrope', sans-serif !important;
 }
 
+.nav-item.disabled .nav-link {
+    color: #c5c5c5;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.nav-item.disabled .nav-link:hover {
+    background-color: transparent;
+}
+
 .container-fluid {
     height: 100vh;
     overflow: hidden;
@@ -67,12 +77,12 @@ body {
 #sidebar .nav-item>a:hover,
 #sidebar .nav-item>button:hover {
     background-color: #A2B9C1;
-    color: #4a4a4a !important;
+    color: #0d0086  !important;
 }
 
 #sidebar .nav-item form button:hover {
     background-color: #A2B9C1 !important;
-    color: #4a4a4a !important;
+    color: #0d0086  !important;
 }
 
 #sidebar .nav-item .icon {
@@ -91,7 +101,7 @@ body {
 #sidebar .nav-item button:hover,
 #sidebar .nav-item button:focus,
 #sidebar .nav-item button:active {
-    color: #4a4a4a !important;
+    color: #0d0086 !important;
     background-color: transparent !important;
     border: none !important;
 }
@@ -107,7 +117,7 @@ body {
 
 #sidebar .nav-item form button:focus,
 #sidebar .nav-item form button:hover {
-    color: #4a4a4a !important;
+    color: #0d0086  !important;
     background: none !important;
     border: none !important;
 }

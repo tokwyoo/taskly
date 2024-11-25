@@ -25,10 +25,11 @@
 
                 </div>
                 <ul class="nav flex-column">
-                    <li class="nav-item">
+                    <li class="nav-item disabled">
                         <form action="{{ url_for('search.search') }}" method="GET" style="display: inline;">
-                            <button type="submit" class="nav-link d-flex align-items-center"
-                                style="border: none; background: none;">
+                            <button type="submit" class="nav-link d-flex align-items-center disabled" 
+                                    style="border: none; background: none; color: #888; cursor: not-allowed;" 
+                                    disabled>
                                 <span class="material-icons-round me-1">search</span>
                                 Search
                             </button>
@@ -43,10 +44,11 @@
                             </button>
                         </form>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item disabled">
                         <form action="{{ url_for('inbox.inbox') }}" method="GET" style="display: inline;">
-                            <button type="submit" class="nav-link d-flex align-items-center"
-                                style="border: none; background: none;">
+                            <button type="submit" class="nav-link d-flex align-items-center disabled" 
+                                    style="border: none; background: none; color: #888; cursor: not-allowed;" 
+                                    disabled>
                                 <span class="material-icons-round me-1">inbox</span>
                                 Inbox
                             </button>
