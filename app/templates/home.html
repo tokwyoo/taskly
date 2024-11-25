@@ -3,8 +3,85 @@
 {% block title %} Taskly - Home {% endblock %}
 
 {% block content %}
+    <div class="container">
+        <h2 id="greeting" style="text-align: center;">{{ greeting }}, {{ user.name }}</h2>
+        
+        <div class="quote-section">
+            <h>Today's Quote:</h2>
+            <blockquote>
+                <p>"{{ quote }}"</p>
+                <footer>{{ author }}</footer>
+            </blockquote>
+        </div>
 
-    <h1>Contenido Principal</h1>
-    <p>Aquí va el contenido principal de la página.</p>
-
+        <h3>Contenido Principal</h3>
+        <p>Aquí va el contenido principal de la página.</p>
+    </div>
 {% endblock %}
+
+{% block styles %}
+<style>
+    .quote-section {
+        border-radius: 10px;
+        padding-left: 20%;
+        padding-right: 20%;
+        margin-bottom: 20px;
+        text-align: center;
+        color:rgb(98, 98, 98);
+        font-size: medium;
+    }
+    
+    .quote-section blockquote {
+        font-style: italic;
+        font-size: small;
+        margin-top: 10px;
+    }
+    
+    .quote-section blockquote footer {
+        font-style: normal;
+        font-weight: bold;
+        font-size: medium;
+        margin-top: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        try {
+            const greetingElement = document.getElementById("greeting");
+            
+            if (!greetingElement) {
+                console.error("No se encontró el elemento con ID 'greeting'.");
+                return;
+            }
+
+            function getGreeting(hour) {
+                if (hour >= 5 && hour < 12) {
+                    return "Good morning";
+                } else if (hour >= 12 && hour < 17) {
+                    return "Good afternoon";
+                } else {
+                    return "Good evening";
+                }
+            }
+
+            // Obtener la hora local del cliente
+            const now = new Date();
+            const userHour = now.getHours();
+            const greeting = getGreeting(userHour);
+
+            console.log(`Hora local del cliente: ${userHour}`);
+            console.log(`Saludo generado: ${greeting}`);
+
+            // Actualizar el saludo en el DOM
+            const username = greetingElement.textContent.split(",")[1]?.trim(); // Mantener el nombre de usuario
+            greetingElement.textContent = `${greeting}, ${username}`;
+        } catch (error) {
+            console.error("Error al ejecutar el script de saludo dinámico:", error);
+        }
+    });
+</script>
+{% endblock %}
+

@@ -7,6 +7,8 @@
     <title>{% block title %} Sidebar {% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+    {% block styles %}{% endblock %}
 </head>
 
 <body>
@@ -108,6 +110,8 @@
             </main>
         </div>
     </div>
+
+    {% block scripts %}{% endblock %}
 </body>
 
 </html>
