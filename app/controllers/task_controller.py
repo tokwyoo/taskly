@@ -12,54 +12,22 @@ from app.models.task import Task
 from app.models.list import List
 from app.db import db
 from datetime import datetime, timedelta
+from app.utils import check_list_ownership, check_task_ownership
 
 from app.models.user import User
 
 tasks_bp = Blueprint("tasks", __name__)
 
 
-def check_list_ownership(list_id):
-    """
-    Verifica si el usuario actual es el propietario de la lista.
-    Lanza un 403 Forbidden si no lo es.
-    """
-    if "user_id" not in session:
-        abort(403)
-
-    list_obj = List.query.get_or_404(list_id)
-    if list_obj.user_id != session["user_id"]:
-        abort(403)
-
-    return list_obj
-
-
-def check_task_ownership(task_id):
-    """
-    Verifica si el usuario actual es el propietario de la lista a la que pertenece la tarea.
-    Lanza un 403 Forbidden si no lo es.
-    """
-    if "user_id" not in session:
-        abort(403)
-
-    task = Task.query.get_or_404(task_id)
-    if task.list.user_id != session["user_id"]:
-        abort(403)
-
-    return task
-
-
 @tasks_bp.route("/lists/<int:list_id>/tasks")
 def view_tasks(list_id):
-    if "user_id" not in session:
-        return redirect(url_for("auth.login"))
 
     current_list = check_list_ownership(list_id)
+
     today = datetime.now().date()
 
-    # Filter out soft-deleted tasks
     tasks = Task.query.filter_by(list_id=list_id, is_deleted=False).all()
 
-    # Categorize tasks
     overdue_tasks = [
         task
         for task in tasks
@@ -137,7 +105,6 @@ def uncomplete_task(task_id):
 
 @tasks_bp.route("/lists/<int:list_id>/tasks", methods=["POST"])
 def create_task(list_id):
-    # Verifica la propiedad de la lista antes de crear la tarea
     check_list_ownership(list_id)
 
     data = request.json
