@@ -1,4 +1,13 @@
-from flask import Blueprint, redirect, render_template, request, jsonify, session, url_for
+from flask import (
+    Blueprint,
+    redirect,
+    render_template,
+    request,
+    jsonify,
+    session,
+    url_for,
+    abort,
+)
 from app.models.task import Task
 from app.models.list import List
 from app.db import db
@@ -8,12 +17,43 @@ from app.models.user import User
 
 tasks_bp = Blueprint("tasks", __name__)
 
-@tasks_bp.route('/lists/<int:list_id>/tasks')
+
+def check_list_ownership(list_id):
+    """
+    Verifica si el usuario actual es el propietario de la lista.
+    Lanza un 403 Forbidden si no lo es.
+    """
+    if "user_id" not in session:
+        abort(403)
+
+    list_obj = List.query.get_or_404(list_id)
+    if list_obj.user_id != session["user_id"]:
+        abort(403)
+
+    return list_obj
+
+
+def check_task_ownership(task_id):
+    """
+    Verifica si el usuario actual es el propietario de la lista a la que pertenece la tarea.
+    Lanza un 403 Forbidden si no lo es.
+    """
+    if "user_id" not in session:
+        abort(403)
+
+    task = Task.query.get_or_404(task_id)
+    if task.list.user_id != session["user_id"]:
+        abort(403)
+
+    return task
+
+
+@tasks_bp.route("/lists/<int:list_id>/tasks")
 def view_tasks(list_id):
     if "user_id" not in session:
         return redirect(url_for("auth.login"))
 
-    current_list = List.query.get_or_404(list_id)
+    current_list = check_list_ownership(list_id)
     today = datetime.now().date()
 
     # Filter out soft-deleted tasks
@@ -21,81 +61,93 @@ def view_tasks(list_id):
 
     # Categorize tasks
     overdue_tasks = [
-        task for task in tasks 
+        task
+        for task in tasks
         if task.due_date and not task.is_completed and task.due_date.date() < today
     ]
 
     today_tasks = [
-        task for task in tasks 
+        task
+        for task in tasks
         if task.due_date and not task.is_completed and task.due_date.date() == today
     ]
 
     upcoming_tasks = [
-        task for task in tasks 
+        task
+        for task in tasks
         if task.due_date and not task.is_completed and task.due_date.date() > today
     ]
 
-    completed_tasks = [
-        task for task in tasks 
-        if task.is_completed
-    ]
+    completed_tasks = [task for task in tasks if task.is_completed]
 
     user = User.query.get(session["user_id"])
 
     return render_template(
-        'tasks.html', 
+        "tasks.html",
         user=user,
-        list=current_list, 
+        list=current_list,
         overdue_tasks=overdue_tasks,
         today_tasks=today_tasks,
-        upcoming_tasks=upcoming_tasks, 
-        completed_tasks=completed_tasks
+        upcoming_tasks=upcoming_tasks,
+        completed_tasks=completed_tasks,
     )
 
-@tasks_bp.route('/tasks/<int:task_id>', methods=['GET'])
+
+@tasks_bp.route("/tasks/<int:task_id>", methods=["GET"])
 def get_task(task_id):
-    task = Task.query.get_or_404(task_id)
+    task = check_task_ownership(task_id)
     return jsonify(task.to_dict()), 200
 
-@tasks_bp.route('/tasks/<int:task_id>', methods=['PUT', 'DELETE'])
-def manage_task(task_id):
-    task = Task.query.get_or_404(task_id)
 
-    if request.method == 'PUT':
+@tasks_bp.route("/tasks/<int:task_id>", methods=["PUT", "DELETE"])
+def manage_task(task_id):
+    task = check_task_ownership(task_id)
+
+    if request.method == "PUT":
         data = request.json
-        task.title = data.get('title', task.title)
-        task.due_date = datetime.fromisoformat(data['due_date']) if data.get('due_date') else None
-        task.notes = data.get('notes', task.notes)
+        task.title = data.get("title", task.title)
+        task.due_date = (
+            datetime.fromisoformat(data["due_date"]) if data.get("due_date") else None
+        )
+        task.notes = data.get("notes", task.notes)
         db.session.commit()
         return jsonify(task.to_dict()), 200
 
-    elif request.method == 'DELETE':
+    elif request.method == "DELETE":
         task.soft_delete()
         db.session.commit()
         return jsonify({"message": "Task deleted successfully"}), 200
 
-@tasks_bp.route('/tasks/<int:task_id>/complete', methods=['POST'])
+
+@tasks_bp.route("/tasks/<int:task_id>/complete", methods=["POST"])
 def complete_task(task_id):
-    task = Task.query.get_or_404(task_id)
+    task = check_task_ownership(task_id)
     task.complete()
     db.session.commit()
     return jsonify(task.to_dict()), 200
 
-@tasks_bp.route('/tasks/<int:task_id>/uncomplete', methods=['POST'])
+
+@tasks_bp.route("/tasks/<int:task_id>/uncomplete", methods=["POST"])
 def uncomplete_task(task_id):
-    task = Task.query.get_or_404(task_id)
+    task = check_task_ownership(task_id)
     task.uncomplete()
     db.session.commit()
     return jsonify(task.to_dict()), 200
 
-@tasks_bp.route('/lists/<int:list_id>/tasks', methods=['POST'])
+
+@tasks_bp.route("/lists/<int:list_id>/tasks", methods=["POST"])
 def create_task(list_id):
+    # Verifica la propiedad de la lista antes de crear la tarea
+    check_list_ownership(list_id)
+
     data = request.json
     new_task = Task(
         list_id=list_id,
-        title=data['title'],
-        due_date=datetime.fromisoformat(data['due_date']) if data.get('due_date') else None,
-        notes=data.get('notes')
+        title=data["title"],
+        due_date=(
+            datetime.fromisoformat(data["due_date"]) if data.get("due_date") else None
+        ),
+        notes=data.get("notes"),
     )
     db.session.add(new_task)
     db.session.commit()
