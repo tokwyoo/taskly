@@ -1,0 +1,42 @@
+<div class="modal fade" id="taskModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <span class="material-icons">task</span> 
+                    New Task
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="taskId">
+                <div class="mb-3">
+                    <label for="taskTitle" class="form-label">
+                        <span class="material-icons">title</span> Title
+                    </label>
+                    <input type="text" class="form-control" id="taskTitle" required>
+                </div>
+                <div class="mb-3">
+                    <label for="taskDueDate" class="form-label">
+                        <span class="material-icons">calendar_today</span> Due Date
+                    </label>
+                    <input type="date" class="form-control" id="taskDueDate">
+                </div>
+                <div class="mb-3">
+                    <label for="taskNotes" class="form-label">
+                        <span class="material-icons">notes</span> Notes
+                    </label>
+                    <textarea class="form-control" id="taskNotes" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <span class="material-icons">close</span> Cancel
+                </button>
+                <button type="button" class="btn btn-primary" id="saveTask">
+                    <span class="material-icons">save</span> Save Task
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

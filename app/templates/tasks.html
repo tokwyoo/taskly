@@ -11,92 +11,73 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/tasks.css') }}" />
+        <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     </head>
     <body>
         <div class="tasks-container">
             <div class="tasks-header">
-                <div class="tasks-header-title">
-                    <a href="/lists" class="back-button">
-                        <i class="fas fa-arrow-left"></i>
-                    </a>
-                    <h1>{{ list.title }}</h1>
-                </div>
-                <button id="newTaskBtn" class="btn-primary">
-                    <i class="fas fa-plus"></i>
-                    Nueva Tarea
+                <h1>Tasks in <span class="list-title">{{ list.title }}</span></h1>
+                <button id="newTask" class="btn btn-primary">
+                    <span class="material-icons">add</span> New Task
                 </button>
             </div>
         
-            <div class="tasks-filters">
-                <div class="filter-group">
-                    <button class="filter-btn active" data-filter="all">Todas</button>
-                    <button class="filter-btn" data-filter="pending">Pendientes</button>
-                    <button class="filter-btn" data-filter="completed">Completadas</button>
+            {% if overdue_tasks %}
+            <div class="tasks-section overdue">
+                <div class="section-header">
+                    <h2><span class="material-icons">warning</span> Overdue</h2>
+                </div>
+                <div class="tasks-list">
+                    {% for task in overdue_tasks %}
+                        {% include 'task_item.html' with context %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        
+            <div class="tasks-section today">
+                <div class="section-header">
+                    <h2><span class="material-icons">today</span> Today</h2>
+                </div>
+                <div class="tasks-list">
+                    {% for task in today_tasks %}
+                        {% include 'task_item.html' with context %}
+                    {% endfor %}
                 </div>
             </div>
         
-            <div id="tasksList" class="tasks-list">
-                {% for task in tasks %}
-                <div class="task-item {% if task.is_completed %}completed{% endif %}" data-task-id="{{ task.id }}">
-                    <div class="task-checkbox">
-                        <input type="checkbox" id="task-{{ task.id }}" {% if task.is_completed %}checked{% endif %}>
-                        <label for="task-{{ task.id }}"></label>
-                    </div>
-                    <div class="task-content">
-                        <h3 class="task-title">{{ task.title }}</h3>
-                        {% if task.due_date %}
-                        <div class="task-due-date">
-                            <i class="fas fa-calendar"></i>
-                            {{ task.due_date.strftime('%d/%m/%Y') }}
-                        </div>
-                        {% endif %}
-                        {% if task.notes %}
-                        <div class="task-notes">{{ task.notes }}</div>
-                        {% endif %}
-                    </div>
-                    <div class="task-actions">
-                        <button class="btn-icon edit-task" title="Editar tarea">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn-icon delete-task" title="Eliminar tarea">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
+            <div class="tasks-section upcoming">
+                <div class="section-header">
+                    <h2><span class="material-icons">event</span> Upcoming</h2>
                 </div>
-                {% endfor %}
+                <div class="tasks-list">
+                    {% for task in upcoming_tasks %}
+                        {% include 'task_item.html' with context %}
+                    {% endfor %}
+                </div>
             </div>
-        </div>
         
-        <div id="taskModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modalTitle">Nueva Tarea</h2>
-                    <button class="close-modal">&times;</button>
+            <div class="tasks-section completed">
+                <div class="section-header">
+                    <h2><span class="material-icons">check_circle</span> Completed</h2>
                 </div>
-                <div class="modal-body">
-                    <form id="taskForm">
-                        <div class="form-group">
-                            <label for="taskTitle">Título</label>
-                            <input type="text" id="taskTitle" name="title" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="taskDueDate">Fecha de vencimiento</label>
-                            <input type="date" id="taskDueDate" name="due_date">
-                        </div>
-                        <div class="form-group">
-                            <label for="taskNotes">Notas</label>
-                            <textarea id="taskNotes" name="notes" rows="3"></textarea>
-                        </div>
-                        <div class="form-actions">
-                            <button type="button" id="cancelBtn" class="btn-secondary">Cancelar</button>
-                            <button type="submit" class="btn-primary">Guardar</button>
-                        </div>
-                    </form>
+                <div class="tasks-list">
+                    {% for task in completed_tasks %}
+                        {% include 'task_item.html' with context %}
+                    {% endfor %}
                 </div>
             </div>
+        
+            {% include 'task_modal.html' %}
         </div>
 
         <script src="{{ url_for('static', filename='js/tasks.js') }}"></script>
+
+        <!-- Bootstrap JS (debe ir antes del cierre del body) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </body>
     </html>
 

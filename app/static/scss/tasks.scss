@@ -1,0 +1,227 @@
+// Color Variables
+$primary-color: #4a90e2;
+$secondary-color: #5f6368;
+$overdue-color: #d93025;
+$today-color: #34a853;
+$upcoming-color: #fbbc05;
+$completed-color: #5f6368;
+
+// Mixins
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin material-icon {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+}
+
+// Global Styles
+.tasks-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    .tasks-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        
+        h1 {
+            margin: 0;
+            color: $secondary-color;
+
+            .list-title {
+                color: $primary-color;
+                font-weight: bold;
+            }
+        }
+
+        #newTask {
+            @include flex-center;
+            gap: 5px;
+            
+            .material-icons {
+                @include material-icon;
+            }
+        }
+    }
+
+    .tasks-section {
+        margin-bottom: 20px;
+        background-color: white;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid #e9ecef;
+
+            h2 {
+                margin: 0;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 1.1rem;
+            }
+
+            .material-icons {
+                @include material-icon;
+            }
+        }
+
+        // Section specific colors
+        &.overdue {
+            .section-header h2 {
+                color: $overdue-color;
+            }
+        }
+
+        &.today {
+            .section-header h2 {
+                color: $today-color;
+            }
+        }
+
+        &.upcoming {
+            .section-header h2 {
+                color: $upcoming-color;
+            }
+        }
+
+        &.completed {
+            .section-header h2 {
+                color: $completed-color;
+            }
+        }
+
+        .tasks-list {
+            padding: 10px;
+        }
+    }
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #e9ecef;
+    gap: 15px;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    .task-checkbox {
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    .task-content {
+        flex-grow: 1;
+
+        .task-title {
+            margin: 0 0 5px 0;
+            font-size: 1rem;
+            color: $secondary-color;
+        }
+
+        .task-meta, .task-notes {
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            color: lighten($secondary-color, 20%);
+            font-size: 0.9rem;
+
+            .material-icons {
+                @include material-icon;
+                margin-right: 5px;
+                font-size: 1rem;
+            }
+        }
+    }
+
+    .task-actions {
+        display: flex;
+        gap: 10px;
+
+        .btn {
+            @include flex-center;
+            background: none;
+            border: none;
+            color: $secondary-color;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.05);
+            }
+
+            .material-icons {
+                @include material-icon;
+            }
+        }
+    }
+}
+
+// Modal Styles
+.modal {
+    .modal-dialog {
+        max-width: 500px;
+    }
+
+    .modal-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .material-icons {
+            @include material-icon;
+        }
+    }
+
+    .modal-body {
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .material-icons {
+                @include material-icon;
+            }
+        }
+    }
+
+    .modal-footer {
+        .btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+            .material-icons {
+                @include material-icon;
+            }
+        }
+    }
+}
+
+@import "../bootstrap-5.3.3/scss/bootstrap";

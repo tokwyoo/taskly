@@ -1,219 +1,97 @@
-from flask import Blueprint, redirect, render_template, request, jsonify, abort, session, url_for
+from flask import Blueprint, redirect, render_template, request, jsonify, session, url_for
 from app.models.task import Task
 from app.models.list import List
 from app.db import db
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from app.models.user import User
 
-tasks = Blueprint('tasks', __name__)
+tasks_bp = Blueprint("tasks", __name__)
 
-@tasks.route('/lists/<int:list_id>/tasks')
-def index(list_id):
-    ##### ACCESO RESTRINGIDO
+@tasks_bp.route('/lists/<int:list_id>/tasks')
+def view_tasks(list_id):
     if "user_id" not in session:
         return redirect(url_for("auth.login"))
-        
-    list_obj = List.query.get_or_404(list_id)
-    
-    if list_obj.is_deleted:
-        abort(404)
-        
-    if list_obj.user_id != session["user_id"]:
-        abort(403)
-    
-    if list_obj.user_id != session["user_id"]:
-        abort(403)  
-    ##### ACCESO RESTRINGIDO
-    
-    # Obtener el usuario y las tareas
-    user = User.query.get(session["user_id"])    
+
+    current_list = List.query.get_or_404(list_id)
+    today = datetime.now().date()
+
+    # Filter out soft-deleted tasks
     tasks = Task.query.filter_by(list_id=list_id, is_deleted=False).all()
-    
-    return render_template('tasks.html', user=user, list=list_obj, tasks=tasks)
 
-@tasks.route('/lists/<int:list_id>/tasks', methods=['POST'])
-def create(list_id):
-    ##### ACCESO RESTRINGIDO
-    if "user_id" not in session:
-        return redirect(url_for("auth.login"))
-        
-    list_obj = List.query.get_or_404(list_id)
-    
-    if list_obj.is_deleted:
-        abort(404)
-        
-    if list_obj.user_id != session["user_id"]:
-        abort(403)
-    
-    if list_obj.user_id != session["user_id"]:
-        abort(403)  
-    ##### ACCESO RESTRINGIDO
-    
-    """Crea una nueva tarea en la lista especificada"""
-    list_obj = List.query.get_or_404(list_id)
-    if list_obj.is_deleted:
-        abort(404)
-        
-    data = request.get_json()
-    
-    task = Task(
+    # Categorize tasks
+    overdue_tasks = [
+        task for task in tasks 
+        if task.due_date and not task.is_completed and task.due_date.date() < today
+    ]
+
+    today_tasks = [
+        task for task in tasks 
+        if task.due_date and not task.is_completed and task.due_date.date() == today
+    ]
+
+    upcoming_tasks = [
+        task for task in tasks 
+        if task.due_date and not task.is_completed and task.due_date.date() > today
+    ]
+
+    completed_tasks = [
+        task for task in tasks 
+        if task.is_completed
+    ]
+
+    user = User.query.get(session["user_id"])
+
+    return render_template(
+        'tasks.html', 
+        user=user,
+        list=current_list, 
+        overdue_tasks=overdue_tasks,
+        today_tasks=today_tasks,
+        upcoming_tasks=upcoming_tasks, 
+        completed_tasks=completed_tasks
+    )
+
+@tasks_bp.route('/tasks/<int:task_id>', methods=['PUT', 'DELETE'])
+def manage_task(task_id):
+    task = Task.query.get_or_404(task_id)
+
+    if request.method == 'PUT':
+        data = request.json
+        task.title = data.get('title', task.title)
+        task.due_date = datetime.fromisoformat(data['due_date']) if data.get('due_date') else None
+        task.notes = data.get('notes', task.notes)
+        db.session.commit()
+        return jsonify(task.to_dict()), 200
+
+    elif request.method == 'DELETE':
+        task.soft_delete()
+        db.session.commit()
+        return jsonify({"message": "Task deleted successfully"}), 200
+
+@tasks_bp.route('/tasks/<int:task_id>/complete', methods=['POST'])
+def complete_task(task_id):
+    task = Task.query.get_or_404(task_id)
+    task.complete()
+    db.session.commit()
+    return jsonify(task.to_dict()), 200
+
+@tasks_bp.route('/tasks/<int:task_id>/uncomplete', methods=['POST'])
+def uncomplete_task(task_id):
+    task = Task.query.get_or_404(task_id)
+    task.uncomplete()
+    db.session.commit()
+    return jsonify(task.to_dict()), 200
+
+@tasks_bp.route('/lists/<int:list_id>/tasks', methods=['POST'])
+def create_task(list_id):
+    data = request.json
+    new_task = Task(
         list_id=list_id,
         title=data['title'],
-        notes=data.get('notes'),
-        due_date=datetime.fromisoformat(data['due_date']) if data.get('due_date') else None
+        due_date=datetime.fromisoformat(data['due_date']) if data.get('due_date') else None,
+        notes=data.get('notes')
     )
-    
-    db.session.add(task)
+    db.session.add(new_task)
     db.session.commit()
-    
-    return jsonify(task.to_dict())
-
-@tasks.route('/lists/<int:list_id>/tasks/<int:task_id>', methods=['PUT'])
-def update(list_id, task_id):
-    ##### ACCESO RESTRINGIDO
-    if "user_id" not in session:
-        return redirect(url_for("auth.login"))
-        
-    list_obj = List.query.get_or_404(list_id)
-    
-    if list_obj.is_deleted:
-        abort(404)
-        
-    if list_obj.user_id != session["user_id"]:
-        abort(403)
-    
-    if list_obj.user_id != session["user_id"]:
-        abort(403)  
-    ##### ACCESO RESTRINGIDO
-    
-    """Actualiza una tarea existente"""
-    task = Task.query.filter_by(id=task_id, list_id=list_id).first_or_404()
-    if task.is_deleted:
-        abort(404)
-        
-    data = request.get_json()
-    
-    task.title = data['title']
-    task.notes = data.get('notes')
-    task.due_date = datetime.fromisoformat(data['due_date']) if data.get('due_date') else None
-    
-    db.session.commit()
-    
-    return jsonify(task.to_dict())
-
-@tasks.route('/lists/<int:list_id>/tasks/<int:task_id>', methods=['DELETE'])
-def delete(list_id, task_id):
-    ##### ACCESO RESTRINGIDO
-    if "user_id" not in session:
-        return redirect(url_for("auth.login"))
-        
-    list_obj = List.query.get_or_404(list_id)
-    
-    if list_obj.is_deleted:
-        abort(404)
-        
-    if list_obj.user_id != session["user_id"]:
-        abort(403)
-    
-    if list_obj.user_id != session["user_id"]:
-        abort(403)  
-    ##### ACCESO RESTRINGIDO
-    
-    """Realiza un borrado suave de una tarea"""
-    task = Task.query.filter_by(id=task_id, list_id=list_id).first_or_404()
-    
-    task.soft_delete()
-    db.session.commit()
-    
-    return jsonify({'message': 'Task deleted successfully'})
-
-@tasks.route('/lists/<int:list_id>/tasks/<int:task_id>/toggle', methods=['PUT'])
-def toggle_complete(list_id, task_id):
-    ##### ACCESO RESTRINGIDO
-    if "user_id" not in session:
-        return redirect(url_for("auth.login"))
-        
-    list_obj = List.query.get_or_404(list_id)
-    
-    if list_obj.is_deleted:
-        abort(404)
-        
-    if list_obj.user_id != session["user_id"]:
-        abort(403)
-    
-    if list_obj.user_id != session["user_id"]:
-        abort(403)  
-    ##### ACCESO RESTRINGIDO
-    
-    """Cambia el estado de completado de una tarea"""
-    task = Task.query.filter_by(id=task_id, list_id=list_id).first_or_404()
-    if task.is_deleted:
-        abort(404)
-    
-    if task.is_completed:
-        task.uncomplete()
-    else:
-        task.complete()
-    
-    db.session.commit()
-    
-    return jsonify(task.to_dict())
-
-@tasks.route('/lists/<int:list_id>/tasks/<int:task_id>/restore', methods=['PUT'])
-def restore(list_id, task_id):
-    ##### ACCESO RESTRINGIDO
-    if "user_id" not in session:
-        return redirect(url_for("auth.login"))
-        
-    list_obj = List.query.get_or_404(list_id)
-    
-    if list_obj.is_deleted:
-        abort(404)
-        
-    if list_obj.user_id != session["user_id"]:
-        abort(403)
-    
-    if list_obj.user_id != session["user_id"]:
-        abort(403)  
-    ##### ACCESO RESTRINGIDO
-    
-    """Restaura una tarea que fue eliminada mediante borrado suave"""
-    task = Task.query.filter_by(id=task_id, list_id=list_id).first_or_404()
-    
-    task.restore()
-    db.session.commit()
-    
-    return jsonify(task.to_dict())
-
-# Endpoint adicional para actualizar la frecuencia de una tarea
-@tasks.route('/lists/<int:list_id>/tasks/<int:task_id>/frequency', methods=['PUT'])
-def update_frequency(list_id, task_id):
-    
-    ##### ACCESO RESTRINGIDO
-    if "user_id" not in session:
-        return redirect(url_for("auth.login"))
-        
-    list_obj = List.query.get_or_404(list_id)
-    
-    if list_obj.is_deleted:
-        abort(404)
-        
-    if list_obj.user_id != session["user_id"]:
-        abort(403)
-    
-    if list_obj.user_id != session["user_id"]:
-        abort(403)  
-    ##### ACCESO RESTRINGIDO
-
-    """Actualiza la frecuencia de una tarea"""
-    task = Task.query.filter_by(id=task_id, list_id=list_id).first_or_404()
-    if task.is_deleted:
-        abort(404)
-    
-    data = request.get_json()
-    task.update_frequency(data)
-    
-    db.session.commit()
-    
-    return jsonify(task.to_dict())
+    return jsonify(new_task.to_dict()), 201
