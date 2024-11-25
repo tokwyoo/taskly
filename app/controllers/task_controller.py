@@ -1,17 +1,13 @@
 from flask import (
     Blueprint,
-    redirect,
     render_template,
     request,
     jsonify,
     session,
-    url_for,
-    abort,
 )
 from app.models.task import Task
-from app.models.list import List
 from app.db import db
-from datetime import datetime, timedelta
+from datetime import datetime
 from app.utils.ownership_utils import check_list_ownership, check_task_ownership
 
 from app.models.user import User
