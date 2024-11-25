@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentListId = null;
 
     // Functions
-    function showModal(title = 'Nueva Lista', listTitle = '') {
+    function showModal(title = 'New List', listTitle = '') {
         modalTitle.textContent = title;
         listTitleInput.value = listTitle;
         listModal.classList.add('active');
@@ -33,9 +33,11 @@ function createListCard(list) {
     const date = new Date(list.created_at).toLocaleDateString();
     
     card.innerHTML = `
-        <a href="/lists/${list.id}/tasks" class="list-card-content">
+        <div class="list-card-content">
             <div class="list-card-header">
-                <h3 class="list-title">${list.title}</h3>
+                <a href="/lists/${list.id}/tasks" class="list-title-link">
+                    <h3 class="list-title">${list.title}</h3>
+                </a>
                 <div class="list-actions">
                     <button class="btn-icon edit-list" title="Editar lista">
                         <i class="fas fa-edit"></i>
@@ -48,7 +50,7 @@ function createListCard(list) {
             <div class="list-card-footer">
                 <span class="list-date">Creada: ${date}</span>
             </div>
-        </a>
+        </div>
     `;
     
     return card;

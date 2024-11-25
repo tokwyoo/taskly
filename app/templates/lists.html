@@ -18,9 +18,9 @@
     
     <div class="lists-container">
         <div class="lists-header">
-            <h1>Mis Listas</h1>
+            <h1>My Lists</h1>
             <button class="btn-primary" id="newListBtn">
-                <i class="fas fa-plus"></i> Nueva Lista
+                <i class="fas fa-plus"></i> New List
             </button>
         </div>
     
@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="list-card-footer">
-                    <span class="list-date">Creada: {{ list.created_at.strftime('%d/%m/%Y') }}</span>
+                    <span class="list-date">Created: {{ list.created_at.strftime('%d/%m/%Y') }}</span>
                 </div>
             </div>
             {% endfor %}
@@ -54,18 +54,18 @@
     <div class="modal" id="listModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modalTitle">Nueva Lista</h2>
+                <h2 id="modalTitle">New List</h2>
                 <button class="close-modal">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="listForm">
                     <div class="form-group">
-                        <label for="listTitle">Título</label>
+                        <label for="listTitle">Title</label>
                         <input type="text" id="listTitle" name="title" required>
                     </div>
                     <div class="form-actions">
-                        <button type="button" class="btn-secondary" id="cancelBtn">Cancelar</button>
-                        <button type="submit" class="btn-primary" id="saveBtn">Guardar</button>
+                        <button type="button" class="btn-secondary" id="cancelBtn">Cancel</button>
+                        <button type="submit" class="btn-primary" id="saveBtn">Save</button>
                     </div>
                 </form>
             </div>
