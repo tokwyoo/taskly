@@ -40,7 +40,7 @@ $completed-color: #5f6368;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
-        
+
         h1 {
             margin: 0;
             color: $secondary-color;
@@ -54,7 +54,7 @@ $completed-color: #5f6368;
         #newTask {
             @include flex-center;
             gap: 5px;
-            
+
             .material-icons {
                 @include material-icon;
             }
@@ -144,7 +144,8 @@ $completed-color: #5f6368;
             color: $secondary-color;
         }
 
-        .task-meta, .task-notes {
+        .task-meta,
+        .task-notes {
             margin: 5px 0;
             display: flex;
             align-items: center;
@@ -222,6 +223,15 @@ $completed-color: #5f6368;
             }
         }
     }
+}
+
+.empty-section-message {
+    text-align: center;
+    color: #6c757d;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    margin: 10px 0;
 }
 
 @import "../bootstrap-5.3.3/scss/bootstrap";

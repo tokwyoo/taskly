@@ -3,40 +3,86 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
-                    <span class="material-icons">task</span> 
+                    <span class="material-icons">task</span>
                     New Task
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body">
-                <input type="hidden" id="taskId">
-                <div class="mb-3">
-                    <label for="taskTitle" class="form-label">
-                        <span class="material-icons">title</span> Title
-                    </label>
-                    <input type="text" class="form-control" id="taskTitle" required>
+            <form id="taskForm" novalidate>
+                <div class="modal-body">
+                    <input type="hidden" id="taskId">
+                    <div class="mb-3">
+                        <label for="taskTitle" class="form-label">
+                            <span class="material-icons">title</span> Title
+                        </label>
+                        <input type="text" class="form-control" id="taskTitle" required>
+                        <div class="invalid-feedback">
+                            Please provide a task title.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="taskDueDate" class="form-label">
+                            <span class="material-icons">calendar_today</span> Due Date
+                        </label>
+                        <input type="date" class="form-control" id="taskDueDate" required>
+                        <div class="invalid-feedback">
+                            Please select a due date.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="taskNotes" class="form-label">
+                            <span class="material-icons">notes</span> Notes
+                        </label>
+                        <textarea class="form-control" id="taskNotes" rows="3"></textarea>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="taskDueDate" class="form-label">
-                        <span class="material-icons">calendar_today</span> Due Date
-                    </label>
-                    <input type="date" class="form-control" id="taskDueDate">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <span class="material-icons">close</span> Cancel
+                    </button>
+                    <button type="button" class="btn btn-primary" id="saveTask">
+                        <span class="material-icons">save</span> Save Task
+                    </button>
                 </div>
-                <div class="mb-3">
-                    <label for="taskNotes" class="form-label">
-                        <span class="material-icons">notes</span> Notes
-                    </label>
-                    <textarea class="form-control" id="taskNotes" rows="3"></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    <span class="material-icons">close</span> Cancel
-                </button>
-                <button type="button" class="btn btn-primary" id="saveTask">
-                    <span class="material-icons">save</span> Save Task
-                </button>
-            </div>
+            </form>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const taskForm = document.getElementById('taskForm');
+        const saveTaskBtn = document.getElementById('saveTask');
+
+        saveTaskBtn.addEventListener('click', function (event) {
+            // Remove was-validated class to reset validation state
+            taskForm.classList.remove('was-validated');
+
+            // Check form validity
+            if (taskForm.checkValidity()) {
+                // If form is valid, proceed with saving task
+                // You would typically call your save function here
+                console.log('Task is valid, saving...');
+                // If save is successful, you might want to close the modal
+                // bootstrap.Modal.getInstance(document.getElementById('taskModal')).hide();
+            } else {
+                // If form is invalid, show validation errors
+                taskForm.classList.add('was-validated');
+            }
+        });
+
+        // Optional: Add real-time validation as user types/selects
+        const requiredInputs = taskForm.querySelectorAll('input[required], select[required], textarea[required]');
+        requiredInputs.forEach(input => {
+            input.addEventListener('input', function () {
+                if (input.validity.valid) {
+                    input.classList.remove('is-invalid');
+                    input.classList.add('is-valid');
+                } else {
+                    input.classList.remove('is-valid');
+                    input.classList.add('is-invalid');
+                }
+            });
+        });
+    });
+</script>
