@@ -52,6 +52,11 @@ def view_tasks(list_id):
         completed_tasks=completed_tasks
     )
 
+@tasks_bp.route('/tasks/<int:task_id>', methods=['GET'])
+def get_task(task_id):
+    task = Task.query.get_or_404(task_id)
+    return jsonify(task.to_dict()), 200
+
 @tasks_bp.route('/tasks/<int:task_id>', methods=['PUT', 'DELETE'])
 def manage_task(task_id):
     task = Task.query.get_or_404(task_id)
