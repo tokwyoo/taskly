@@ -1,9 +1,11 @@
 from flask import (
     Blueprint,
+    redirect,
     render_template,
     request,
     jsonify,
     session,
+    url_for,
 )
 from app.models.task import Task
 from app.db import db
@@ -17,6 +19,9 @@ tasks_bp = Blueprint("tasks", __name__)
 
 @tasks_bp.route("/lists/<int:list_id>/tasks")
 def view_tasks(list_id):
+
+    if "user_id" not in session:
+        return redirect(url_for("auth.login"))
 
     current_list = check_list_ownership(list_id)
 
