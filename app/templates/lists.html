@@ -4,7 +4,74 @@
 
 {% block content %}
 
-    <h1>Lists</h1>
-    <p>Aquí va el contenido principal de la página.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lists</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/lists.css') }}" />
+    <!-- Incluir Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    
+    <div class="lists-container">
+        <div class="lists-header">
+            <h1>Mis Listas</h1>
+            <button class="btn-primary" id="newListBtn">
+                <i class="fas fa-plus"></i> Nueva Lista
+            </button>
+        </div>
+    
+        <div class="lists-grid" id="listsGrid">
+            {% for list in lists %}
+            <div class="list-card" data-list-id="{{ list.id }}">
+                <div class="list-card-header">
+                    <h3 class="list-title">{{ list.title }}</h3>
+                    <div class="list-actions">
+                        <button class="btn-icon edit-list" title="Editar lista">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-icon delete-list" title="Eliminar lista">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="list-card-footer">
+                    <span class="list-date">Creada: {{ list.created_at.strftime('%d/%m/%Y') }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Modal para nueva lista -->
+    <div class="modal" id="listModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Nueva Lista</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="listForm">
+                    <div class="form-group">
+                        <label for="listTitle">Título</label>
+                        <input type="text" id="listTitle" name="title" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelBtn">Cancelar</button>
+                        <button type="submit" class="btn-primary" id="saveBtn">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="{{ url_for('static', filename='js/lists.js') }}"></script>
+</body>
+</html>
+
 
 {% endblock %}
