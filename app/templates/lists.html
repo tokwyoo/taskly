@@ -28,7 +28,9 @@
             {% for list in lists %}
             <div class="list-card" data-list-id="{{ list.id }}">
                 <div class="list-card-header">
-                    <h3 class="list-title">{{ list.title }}</h3>
+                    <a href="/lists/{{ list.id }}/tasks" class="list-title-link">
+                        <h3 class="list-title">{{ list.title }}</h3>
+                    </a>
                     <div class="list-actions">
                         <button class="btn-icon edit-list" title="Editar lista">
                             <i class="fas fa-edit"></i>
@@ -44,6 +46,8 @@
             </div>
             {% endfor %}
         </div>
+        
+        
     </div>
     
     <!-- Modal para nueva lista -->

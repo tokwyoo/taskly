@@ -11,6 +11,7 @@ from app.controllers.pomodoro_controller import pomodoro_bp
 from app.controllers.search_controller import search_bp
 from app.controllers.trash_controller import trash_bp
 from app.controllers.user_controller import user_bp
+from app.controllers.task_controller import tasks
 from app.db import db
 
 def create_app():
@@ -38,5 +39,6 @@ def create_app():
     app.register_blueprint(pomodoro_bp)
     app.register_blueprint(search_bp)
     app.register_blueprint(trash_bp)
+    app.register_blueprint(tasks)
 
     return app

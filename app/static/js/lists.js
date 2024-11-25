@@ -25,14 +25,15 @@ document.addEventListener('DOMContentLoaded', function() {
         currentListId = null;
     }
 
-    function createListCard(list) {
-        const card = document.createElement('div');
-        card.className = 'list-card';
-        card.dataset.listId = list.id;
-        
-        const date = new Date(list.created_at).toLocaleDateString();
-        
-        card.innerHTML = `
+function createListCard(list) {
+    const card = document.createElement('div');
+    card.className = 'list-card';
+    card.dataset.listId = list.id;
+    
+    const date = new Date(list.created_at).toLocaleDateString();
+    
+    card.innerHTML = `
+        <a href="/lists/${list.id}/tasks" class="list-card-content">
             <div class="list-card-header">
                 <h3 class="list-title">${list.title}</h3>
                 <div class="list-actions">
@@ -47,10 +48,11 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="list-card-footer">
                 <span class="list-date">Creada: ${date}</span>
             </div>
-        `;
-        
-        return card;
-    }
+        </a>
+    `;
+    
+    return card;
+}
 
     function showNotification(message, type = 'success') {
         // Puedes implementar tu propio sistema de notificaciones

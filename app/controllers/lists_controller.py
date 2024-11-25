@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, session, url_for, request, jsonify
+from flask import Blueprint, abort, redirect, render_template, session, url_for, request, jsonify
 from app.models.user import User
 from app.models.list import List
 from app.db import db
@@ -7,6 +7,7 @@ lists_bp = Blueprint("lists", __name__)
 
 @lists_bp.route("/lists")
 def lists():
+    ##### ACCESO RESTRINGIDO
     if "user_id" not in session:
         return redirect(url_for("auth.login"))
     
@@ -17,7 +18,7 @@ def lists():
 @lists_bp.route("/lists/create", methods=["POST"])
 def create_list():
     if "user_id" not in session:
-        return jsonify({"error": "Unauthorized"}), 401
+        return redirect(url_for("auth.login"))
     
     data = request.json
     title = data.get("title")
@@ -38,7 +39,7 @@ def create_list():
 @lists_bp.route("/lists/<int:list_id>", methods=["PUT"])
 def update_list(list_id):
     if "user_id" not in session:
-        return jsonify({"error": "Unauthorized"}), 401
+        return redirect(url_for("auth.login"))
         
     list_item = List.query.get_or_404(list_id)
     
@@ -59,7 +60,7 @@ def update_list(list_id):
 @lists_bp.route("/lists/<int:list_id>", methods=["DELETE"])
 def delete_list(list_id):
     if "user_id" not in session:
-        return jsonify({"error": "Unauthorized"}), 401
+        return redirect(url_for("auth.login"))
         
     list_item = List.query.get_or_404(list_id)
     
@@ -74,7 +75,7 @@ def delete_list(list_id):
 @lists_bp.route("/lists/<int:list_id>/restore", methods=["POST"])
 def restore_list(list_id):
     if "user_id" not in session:
-        return jsonify({"error": "Unauthorized"}), 401
+        return redirect(url_for("auth.login"))
         
     list_item = List.query.get_or_404(list_id)
     

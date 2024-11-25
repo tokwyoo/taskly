@@ -16,6 +16,13 @@
     }
 }
 
+.list-title-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
 .lists-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
