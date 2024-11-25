@@ -4,7 +4,7 @@ import sass
 def compile_scss(input_file, output_file):
     """Compila un archivo SCSS a CSS"""
     compiled_css = sass.compile(filename=input_file)
-    with open(output_file, 'w') as f:
+    with open(output_file, 'w', encoding='utf-8') as f:
         f.write(compiled_css)
 
 def compile_all_scss(scss_folder, css_folder):
