@@ -40,3 +40,20 @@ def restore_task(task_id):
     db.session.commit()
 
     return redirect(url_for('trash.trash'))  # Redirige de vuelta a la papelera 
+
+@trash_bp.route("/trash/delete_forever/<int:task_id>", methods=["POST"])
+def delete_forever(task_id):
+    if "user_id" not in session:
+        return redirect(url_for("auth.login"))
+    
+    task = Task.query.get_or_404(task_id)
+
+    # Verificar si el usuario tiene permisos sobre la tarea (a través de la lista asociada)
+    if task.list.user_id != session["user_id"]:
+        return jsonify({"error": "Forbidden"}), 403
+    
+    # Eliminar la tarea permanentemente
+    db.session.delete(task)
+    db.session.commit()
+
+    return redirect(url_for('trash.trash'))  # Redirige de vuelta a la papelera

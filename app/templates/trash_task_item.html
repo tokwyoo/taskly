@@ -1,4 +1,3 @@
-
 <div class="task-item" data-task-id="{{ task.id }}">
     <div class="task-checkbox">
         <input type="checkbox" {% if task.is_completed %}checked{% endif %} disabled>
@@ -22,9 +21,51 @@
             List: {{ task.list.title }}
     </div>
     <div class="task-actions">
-
         <form action="{{ url_for('trash.restore_task', task_id=task.id) }}" method="POST">
-            <button class="btn" type="submit">Restaurar tarea</button>
+            <button class="btn restore" type="submit">Restore task</button>
+        </form>
+
+         <!-- Delete Forever -->
+         <form action="{{ url_for('trash.delete_forever', task_id=task.id) }}" method="POST">
+            <button class="btn delete" type="submit">Permanently delete</button>
         </form>
     </div>
 </div>
+
+<style>
+    .task-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+    }
+
+    .task-actions form {
+        display: inline-block;
+        margin-left: 10px;
+    }
+
+    .task-actions button {
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+    }
+
+    .task-actions .restore {
+        background-color: #5a5a5a !important;/* Azul */
+        color: white !important;
+    }
+
+    .task-actions .delete {
+        background-color: #c5535f !important; /* Rojo */
+        color: white !important;
+    }
+
+    .task-actions button:hover {
+        transform: scale(1.1);
+    }
+</style>
