@@ -1,0 +1,30 @@
+
+<div class="task-item" data-task-id="{{ task.id }}">
+    <div class="task-checkbox">
+        <input type="checkbox" {% if task.is_completed %}checked{% endif %} disabled>
+    </div>
+    <div class="task-content">
+        <h3 class="task-title">{{ task.title }}</h3>
+        {% if task.due_date %}
+        <p class="task-meta">
+            <span class="material-icons">calendar_today</span>
+            {{ task.due_date.strftime('%m/%d/%Y') }}
+        </p>
+        {% endif %}
+        {% if task.notes %}
+        <p class="task-notes">
+            <span class="material-icons">notes</span>
+            {{ task.notes }}
+        </p>
+        {% endif %}
+        <p class="task-list">
+            <span class="material-icons">library_books</span>
+            List: {{ task.list.title }}
+    </div>
+    <div class="task-actions">
+
+        <form action="{{ url_for('trash.restore_task', task_id=task.id) }}" method="POST">
+            <button class="btn" type="submit">Restaurar tarea</button>
+        </form>
+    </div>
+</div>

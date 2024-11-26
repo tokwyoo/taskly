@@ -13,8 +13,9 @@ def trash():
     
     user = User.query.get(session["user_id"])
 
-    # Obtener las tareas eliminadas del usuario (filtrando por la lista asociada al usuario)
-    tasks_in_trash = Task.query.filter(Task.list.has(user_id=user.id), Task.is_deleted == True).all()
+    tasks_in_trash = Task.query.filter(Task.list.has(user_id=user.id), Task.is_deleted == True) \
+    .order_by(Task.deleted_at.desc()).all()
+
 
     return render_template("trash.html", tasks_in_trash=tasks_in_trash, user=user)
 
