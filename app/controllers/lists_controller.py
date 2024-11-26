@@ -1,4 +1,5 @@
 from flask import Blueprint, abort, redirect, render_template, session, url_for, request, jsonify
+from app.models.task import Task
 from app.models.user import User
 from app.models.list import List
 from app.db import db
@@ -66,7 +67,11 @@ def delete_list(list_id):
     
     if list_item.user_id != session["user_id"]:
         return jsonify({"error": "Forbidden"}), 403
-        
+    
+    tasks = Task.query.filter(Task.list_id == list_item.id).all()
+    for task in tasks:
+        task.soft_delete()
+
     list_item.soft_delete()
     db.session.commit()
     
