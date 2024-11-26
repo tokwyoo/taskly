@@ -3,90 +3,90 @@
 {% block title %} Taskly - Home {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h2 id="greeting" style="text-align: center;">{{ greeting }}, {{ user.name }}</h2>
-        
-        <div class="quote-section">
-            <h>Today's Quote:</h2>
+<div class="container">
+    <h2 id="greeting" style="text-align: center;">{{ greeting }}, {{ user.name }}</h2>
+
+    <div class="quote-section">
+        <h>Today's Quote:</h2>
             <blockquote>
                 <p>"{{ quote }}"</p>
                 <footer>{{ author }}</footer>
             </blockquote>
-        </div>
-
-        <!--    tasks   -->
-        <div class="tasks-container">
-            
-            <h4>Task Summary</h4>
-    
-            {% if overdue_tasks %}
-            <div class="tasks-section overdue">
-                <div class="section-header">
-                    <h2><span class="material-icons">warning</span> Overdue</h2>
-                </div>
-                <div class="tasks-list">
-                    {% for task in overdue_tasks %}
-                    {% include 'home_task_item.html' with context %}
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %}
-    
-            <div class="tasks-section today">
-                <div class="section-header">
-                    <h2><span class="material-icons">today</span> Today</h2>
-                </div>
-                <div class="tasks-list">
-                    {% if today_tasks %}
-                    {% for task in today_tasks %}
-                    {% include 'home_task_item.html' with context %}
-                    {% endfor %}
-                    {% else %}
-                    <div class="empty-section-message">
-                        <p>No tasks scheduled for today</p>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-    
-            <div class="tasks-section upcoming">
-                <div class="section-header">
-                    <h2><span class="material-icons">event</span> Upcoming</h2>
-                </div>
-                <div class="tasks-list">
-                    {% if upcoming_tasks %}
-                    {% for task in upcoming_tasks %}
-                    {% include 'home_task_item.html' with context %}
-                    {% endfor %}
-                    {% else %}
-                    <div class="empty-section-message">
-                        <p>No upcoming tasks</p>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-    
-            <div class="tasks-section completed">
-                <div class="section-header">
-                    <h2><span class="material-icons">check_circle</span> Completed</h2>
-                </div>
-                <div class="tasks-list">
-                    {% if completed_tasks %}
-                    {% for task in completed_tasks %}
-                    {% include 'home_task_item.html' with context %}
-                    {% endfor %}
-                    {% else %}
-                    <div class="empty-section-message">
-                        <p>No completed tasks</p>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-    
-            {% include 'task_modal.html' %}
-        </div>
-
     </div>
+
+    <!--    tasks   -->
+    <div class="tasks-container">
+
+        <h4>Task Summary</h4>
+
+        {% if overdue_tasks %}
+        <div class="tasks-section overdue">
+            <div class="section-header">
+                <h2><span class="material-icons">warning</span> Overdue</h2>
+            </div>
+            <div class="tasks-list">
+                {% for task in overdue_tasks %}
+                {% include 'home_task_item.html' with context %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="tasks-section today">
+            <div class="section-header">
+                <h2><span class="material-icons">today</span> Today</h2>
+            </div>
+            <div class="tasks-list">
+                {% if today_tasks %}
+                {% for task in today_tasks %}
+                {% include 'home_task_item.html' with context %}
+                {% endfor %}
+                {% else %}
+                <div class="empty-section-message">
+                    <p>No tasks scheduled for today</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="tasks-section upcoming">
+            <div class="section-header">
+                <h2><span class="material-icons">event</span> Upcoming</h2>
+            </div>
+            <div class="tasks-list">
+                {% if upcoming_tasks %}
+                {% for task in upcoming_tasks %}
+                {% include 'home_task_item.html' with context %}
+                {% endfor %}
+                {% else %}
+                <div class="empty-section-message">
+                    <p>No upcoming tasks</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="tasks-section completed">
+            <div class="section-header">
+                <h2><span class="material-icons">check_circle</span> Completed</h2>
+            </div>
+            <div class="tasks-list">
+                {% if completed_tasks %}
+                {% for task in completed_tasks %}
+                {% include 'home_task_item.html' with context %}
+                {% endfor %}
+                {% else %}
+                <div class="empty-section-message">
+                    <p>No completed tasks</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% include 'task_modal.html' %}
+    </div>
+
+</div>
 
 {% endblock %}
 
@@ -103,16 +103,16 @@
         padding-right: 20%;
         margin-bottom: 20px;
         text-align: center;
-        color:rgb(98, 98, 98);
+        color: rgb(98, 98, 98);
         font-size: medium;
     }
-    
+
     .quote-section blockquote {
         font-style: italic;
         font-size: small;
         margin-top: 10px;
     }
-    
+
     .quote-section blockquote footer {
         font-style: normal;
         font-weight: bold;
@@ -121,7 +121,7 @@
     }
 
     h4 {
-        color:rgb(98, 98, 98);
+        color: rgb(98, 98, 98);
         font-style: normal;
         font-weight: bold;
         font-size: large;
@@ -138,10 +138,10 @@
 <script src="{{ url_for('static', filename='js/home_tasks.js') }}"></script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         try {
             const greetingElement = document.getElementById("greeting");
-            
+
             if (!greetingElement) {
                 console.error("No se encontró el elemento con ID 'greeting'.");
                 return;
@@ -152,9 +152,12 @@
                     return "Good morning";
                 } else if (hour >= 12 && hour < 17) {
                     return "Good afternoon";
-                } else {
+                } else if (hour >= 17 && hour < 22) {
                     return "Good evening";
+                } else {
+                    return "Good night";
                 }
+
             }
 
             // Obtener la hora local del cliente
@@ -174,4 +177,3 @@
     });
 </script>
 {% endblock %}
-
