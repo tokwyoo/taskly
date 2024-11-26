@@ -1,8 +1,9 @@
+import datetime  # Esto importa el módulo datetime
 from flask import Blueprint, render_template, redirect, url_for, session
 import requests
 import time
-
 from app.models.user import User
+from app.models.task import Task  # Asegúrate de importar el modelo Task
 
 home_bp = Blueprint("home", __name__)
 
@@ -43,7 +44,27 @@ def home():
     # Obtener la cita inspiradora
     quote, author = get_inspirational_quote()
 
+    # Obtener las tareas del usuario, filtrando por user_id de la lista y excluyendo las eliminadas
+    tasks = Task.query.filter(Task.list.has(user_id=user.id), Task.is_deleted == False).all()
+
+    # Obtener las tareas categorizadas
+    today = datetime.datetime.now().date()  # Usa datetime.datetime.now() en lugar de datetime.now()
+
+    # Ordenar las tareas por due_date de más antigua a más futura
+    overdue_tasks = sorted([task for task in tasks if task.due_date and task.due_date.date() < today and not task.is_completed], key=lambda t: t.due_date)
+    today_tasks = sorted([task for task in tasks if task.due_date and task.due_date.date() == today and not task.is_completed], key=lambda t: t.due_date)
+    upcoming_tasks = sorted([task for task in tasks if task.due_date and task.due_date.date() > today and not task.is_completed], key=lambda t: t.due_date)
+    completed_tasks = sorted([task for task in tasks if task.is_completed], key=lambda t: t.completed_at if t.completed_at else t.created_at)
+
     # Saludo genérico como fallback
     greeting = "Hello there"
     
-    return render_template("home.html", user=user, quote=quote, author=author, greeting=greeting)
+    return render_template("home.html", 
+                           user=user, 
+                           quote=quote, 
+                           author=author, 
+                           greeting=greeting,
+                           overdue_tasks=overdue_tasks,
+                           today_tasks=today_tasks,
+                           upcoming_tasks=upcoming_tasks,
+                           completed_tasks=completed_tasks)

@@ -14,12 +14,88 @@
             </blockquote>
         </div>
 
-        <h3>Contenido Principal</h3>
-        <p>Aquí va el contenido principal de la página.</p>
+        <!--    tasks   -->
+        <div class="tasks-container">
+            
+            <h4>Task Summary</h4>
+    
+            {% if overdue_tasks %}
+            <div class="tasks-section overdue">
+                <div class="section-header">
+                    <h2><span class="material-icons">warning</span> Overdue</h2>
+                </div>
+                <div class="tasks-list">
+                    {% for task in overdue_tasks %}
+                    {% include 'home_task_item.html' with context %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+    
+            <div class="tasks-section today">
+                <div class="section-header">
+                    <h2><span class="material-icons">today</span> Today</h2>
+                </div>
+                <div class="tasks-list">
+                    {% if today_tasks %}
+                    {% for task in today_tasks %}
+                    {% include 'home_task_item.html' with context %}
+                    {% endfor %}
+                    {% else %}
+                    <div class="empty-section-message">
+                        <p>No tasks scheduled for today</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+    
+            <div class="tasks-section upcoming">
+                <div class="section-header">
+                    <h2><span class="material-icons">event</span> Upcoming</h2>
+                </div>
+                <div class="tasks-list">
+                    {% if upcoming_tasks %}
+                    {% for task in upcoming_tasks %}
+                    {% include 'home_task_item.html' with context %}
+                    {% endfor %}
+                    {% else %}
+                    <div class="empty-section-message">
+                        <p>No upcoming tasks</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+    
+            <div class="tasks-section completed">
+                <div class="section-header">
+                    <h2><span class="material-icons">check_circle</span> Completed</h2>
+                </div>
+                <div class="tasks-list">
+                    {% if completed_tasks %}
+                    {% for task in completed_tasks %}
+                    {% include 'home_task_item.html' with context %}
+                    {% endfor %}
+                    {% else %}
+                    <div class="empty-section-message">
+                        <p>No completed tasks</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+    
+            {% include 'task_modal.html' %}
+        </div>
+
     </div>
+
 {% endblock %}
 
 {% block styles %}
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tasks.css') }}" />
+
 <style>
     .quote-section {
         border-radius: 10px;
@@ -43,10 +119,24 @@
         font-size: medium;
         margin-top: 10px;
     }
+
+    h4 {
+        color:rgb(98, 98, 98);
+        font-style: normal;
+        font-weight: bold;
+        font-size: large;
+        padding: 20px;
+    }
 </style>
 {% endblock %}
 
 {% block scripts %}
+
+<!-- Bootstrap JS (debe ir antes del cierre del body) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="{{ url_for('static', filename='js/home_tasks.js') }}"></script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         try {
